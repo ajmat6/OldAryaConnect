@@ -1,5 +1,5 @@
-nav {
-    background: rgba(0, 0, 0, 0.3);
+/* nav {
+    background: black;
     width: max-content; /* jitni chaaiye utni width */
     display: block;
     padding: 0.7rem 1.7rem;
@@ -30,4 +30,4 @@ nav a:hover {
 nav a.active { /* that anchor tag whose class is active */
     background: var(--color-primary);
     color: var(--color-bg);
-}
+} */
