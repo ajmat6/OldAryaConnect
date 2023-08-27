@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 
 export default function Navbar(props) {
   return (
-    <nav className="bg-black p-4 flex items-center justify-between fixed top-0 w-full">
+    <nav className="bg-black p-4 flex items-center justify-between fixed top-0 w-full z-10">
         <div className="text-xl font-semibold">
-          <span className="inline-block animate-bounce text-[#4ac0d8] mr-2">Old</span>
+          <span className="inline-block animate-bounce text-[#4db5ff] mr-2">Old</span>
           <span className="inline-block animate-pulse text-white">Arya</span>
         </div>
         <div className="ml-6 space-x-16 font-semibold md:flex hidden">

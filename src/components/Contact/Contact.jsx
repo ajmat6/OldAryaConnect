@@ -41,21 +41,18 @@ function Contact() {
             <HiOutlineMail className='option-icon'/>
             <h4>Email</h4>
             <h6>ajmat1130666@gmail.com</h6>
-            {/* Below href will take user to the gmail and will automatically populate their gmail with reciever email id as mentioned below */}
             <a href="mailto:ajmat1130666@gmail.com" target="_blank">Send a message</a>
           </article>
           <article className="contact-option">
             <BsLinkedin className='option-icon'/>
             <h4>LinkedIn</h4>
-            <h5>Ajmat Kathat</h5>
-            {/* Below href will take user to the gmail and will automatically populate their gmail with reciever email id as mentioned below */}
+            <h6>Ajmat Kathat</h6>
             <a href="https://linkedin.com/in/ajmat-kathat-0a5b45252" target="_blank">Send a message</a>
           </article>
           <article className="contact-option">
             <BsWhatsapp className='option-icon'/>
             <h4>WhatsApp</h4>
-            <h5>+91-95212xxxxx</h5>
-            {/* Below href will take user to the gmail and will automatically populate their gmail with reciever email id as mentioned below */}
+            <h6>+91-95212xxxxx</h6>
             <a href="https://api.whatsapp.com/send?phone=9521200877" target="_blank">Send a message</a>
           </article>
         </div>

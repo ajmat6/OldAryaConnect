@@ -56,7 +56,11 @@
 .about-icon {
     color: var(--color-primary);
     font-size: 1.4rem;
-    margin-bottom: 1rem;
+    margin: 0 auto;
+}
+
+h5 {
+    margin-top: 1rem;
 }
 
 .about-card-content h5 {

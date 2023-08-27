@@ -15,7 +15,7 @@ body
 }
 
 .note-item {
-    background: var(--color-bg-variant);
+    background: #161642;
     padding: 1.2rem;
     border-radius: 2rem;
     border: 1px solid transparent;

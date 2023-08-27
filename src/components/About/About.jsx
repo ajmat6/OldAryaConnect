@@ -25,7 +25,7 @@ function About() {
             <article className="about-card-content">
               <FaAward className="about-icon"/>
               <h5>Programmer</h5>
-              <small>Leetcode 150+ Days consistency(STILL GOING)</small>
+              <small>Leetcode 450+ Questions Solved</small>
             </article>
             <article className="about-card-content">
               <IoSchoolOutline className="about-icon"/>
@@ -35,7 +35,7 @@ function About() {
             <article className="about-card-content">
               <VscFolderLibrary className="about-icon"/>
               <h5>Projects</h5>
-              <small>20+ Projects (Aggregate)</small>
+              <small>10+ Projects (Aggregate)</small>
             </article>
           </div>
 
