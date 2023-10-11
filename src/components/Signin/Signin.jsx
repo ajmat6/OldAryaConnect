@@ -1,10 +1,27 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Layout from '../Layout/Layout'
 import { Link } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { signinCredentials } from '../../reducers/userAuthReducer';
+import {useSelector, useDispatch} from 'react-redux'
 
 const Signin = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    
+    const auth = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    
+    const signIn = (e) => {
+        e.preventDefault();
+        const payload = {
+            email,
+            password
+        }
+
+        dispatch(signinCredentials(payload));
+    }
   return (
     <Layout footer>
         <div className='text-white md:flex'>
@@ -27,7 +44,7 @@ const Signin = () => {
                                 </label>
                             </div>
                             <div className='mt-1'>
-                                <input type="email" placeholder='Enter your email' className='h-14 text-[11px]'/>
+                                <input type="email" placeholder='Enter your email' className='h-14 text-[11px]' value={email} onChange={(e) => setEmail(e.target.value)}/>
                             </div>
 
                             <div className='mt-4'>
@@ -37,11 +54,11 @@ const Signin = () => {
                                 </label>
                             </div>
                             <div className='mt-1'>
-                                <input type="password" placeholder='Enter your password' className='h-14 text-[11px]'/>
+                                <input type="password" placeholder='Enter your password' className='h-14 text-[11px]' value={password} onChange={(e) => setPassword(e.target.value)}/>
                             </div>
                         </div>
 
-                        <button className='btn btn-primary md:w-[376px] sm:w-[298px]'>Log In</button>
+                        <button className='btn btn-primary md:w-[376px] sm:w-[298px]' onClick={signIn}>Log In</button>
                         
                         <div className='flex flex-row justify-between items-center text-[10px] md:w-[376px] w-[298px]'>
                             <div><Link>Forgot Password?</Link></div>

@@ -5,6 +5,7 @@ import {FaGithub} from 'react-icons/fa'
 import {AiFillBook} from 'react-icons/ai'
 import Me from '../../assets/myphoto.jpg'
 import NotesPhoto from '../../assets/notesPhoto.jpg'
+import Layout from '../Layout/Layout'
 
 // for major projects
 const data1 = [
@@ -62,28 +63,28 @@ const data1 = [
 
 function Notes() {
   return (
-    <section id='notes'>
-      <h5>Get All Notes</h5>
-      <h2>University Exams</h2>
+    <Layout>
+      <section id='notes'>
+        <h5>Get All Notes</h5>
+        <h2>University Exams</h2>
 
-      <div className="container note-container">
-        {
-          data1.map(({id, image, title, link}) => {
-            return (
-              <article key={id} className="note-item">
-                <div className="note-item-image">
-                  <img className='note-photo' src={image} alt={title} />
-                </div>
-                <h3>{title}</h3>
-                <Link to={link} className="btn btn-primary">See Notes<span><AiFillBook className="notePhoto"/></span></Link>
-              </article>
-            )
-          })
-        }
-      </div>
-
-     
-    </section>
+        <div className="container note-container">
+          {
+            data1.map(({id, image, title, link}) => {
+              return (
+                <article key={id} className="note-item">
+                  <div className="note-item-image">
+                    <img className='note-photo' src={image} alt={title} />
+                  </div>
+                  <h3>{title}</h3>
+                  <Link to={link} className="btn btn-primary">See Notes<span><AiFillBook className="notePhoto"/></span></Link>
+                </article>
+              )
+            })
+          }
+        </div>
+      </section>
+    </Layout>
   )
 }
 

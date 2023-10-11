@@ -1,9 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 
 
 export default function Navbar(props) {
+  const auth = useSelector((state) => state.auth)
+
   return (
     <nav className="bg-black p-4 flex items-center justify-between w-full z-10">
         <div className="text-xl font-semibold">
@@ -17,9 +19,15 @@ export default function Navbar(props) {
           <Link to="/contact" className="text-white hover:text-gray-300 px-4">Contact</Link>
         </div>
         <div className='hidden text-white font-semibold md:block bg-gray-800 px-[13px] py-[5px] rounded-md mx-5'>
-          <Link to={'/signin'}><button >Login</button></Link>
-          
-          {/* <button>SignUp</button> */}
+          {
+            !auth.authenticate ? 
+            <>
+              <Link to={'/signin'}><button >Login</button></Link>
+              <Link to={'/signup'}><button > /Signup</button></Link> 
+            </>
+            :
+            <Link to={'/myProfile'}><div>{auth.userInfo.name}</div></Link>
+          }
         </div>
     </nav>
   )

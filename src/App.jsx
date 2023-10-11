@@ -8,6 +8,7 @@ import Notes from './components/Notes/Notes';
 import SemNotes from './components/SemNotes/SemNotes';
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
+import UserProfile from './components/UserProfile/UserProfile';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path='/signin' element={<Signin />}/>
           <Route path='/signup' element={<Signup />}/>
           <Route path='/contact' element={<Contact />}/>
+          <Route path='/myProfile' element={<UserProfile />}/>
           <Route path='/notes/:note' element={<SemNotes />}/>
         </Routes>
       </BrowserRouter>
