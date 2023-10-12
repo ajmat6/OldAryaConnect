@@ -25,7 +25,7 @@ const Signin = () => {
   return (
     <Layout footer>
         <div className='text-white md:flex'>
-            <div className='w-[50%] bg-[#8F00FF] h-[100vh] hidden md:block'>
+            <div className='w-[50%] bg-[#8F00FF] h-[92vh] hidden md:block'>
                 
             </div>
             <div className='md:w-[50%]'>

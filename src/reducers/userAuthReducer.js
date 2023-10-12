@@ -70,7 +70,7 @@ export const updateUserInfo = createAsyncThunk('updateUserInfo', async (payload)
     console.log(res)
     if(res.status === 200)
     {
-        localStorage.setItem('user', JSON.stringify(res.data.user));
+        localStorage.setItem('ouser', JSON.stringify(res.data.user));
     }
     return res.data
 })

@@ -29,6 +29,8 @@ function UserProfile() {
     const [editMobileValue, setEditMobileValue] = useState('Edit')
     const [editMobile, setEditMobile] = useState(false)
 
+    const [profilePic, setProfilePic] = useState(Me);
+
     const [showPersonal, setShowPersonal] = useState(true);
     const [showAddress, setShowAddress] = useState(false);
 
@@ -64,16 +66,6 @@ function UserProfile() {
             setEditMobileValue('Edit');
             setEditMobile(false)
         }
-    }
-
-    const personal = () => {
-        setShowPersonal(true);
-        setShowAddress(false)
-    }
-
-    const address = () => {
-        setShowPersonal(false);
-        setShowAddress(true)
     }
 
     // function to handle personal info edit:
@@ -130,8 +122,8 @@ function UserProfile() {
                  <div className="container about-container">
                     <div className="">
                         <div className="">
-                            <img className='rounded-full animate-pulse border border-black mb-16 mt-4' src={Me} alt="Me" />
-                            <input className='h-17 w-60 ml-12 md:ml-20 text-sm text-center cursor-pointer' type='file' />
+                            <img className='rounded-full animate-pulse border border-black mb-10 mt-4' src={Me} alt="Me" />
+                            <input className='h-17 w-60 ml-20 md:ml-23 text-sm text-center cursor-pointer' type='file' onChange={(e) => setProfilePic(e.target.files[0])}/>
                         </div>
                     </div>
                     <div className="about-content mt-8">
@@ -147,7 +139,7 @@ function UserProfile() {
                                 <div className='flex flex-start'>
                                     <div style={{paddingRight: '12px' }}>
                                         <div style={{ marginBottom: '10px', position: 'relative' }}>
-                                            <label htmlFor="firstname" className='labell'>First Name</label>
+                                            <label htmlFor="firstname" className='labell'>Username</label>
                                             <input
                                                 type="text"
                                                 className='h-14'
@@ -161,7 +153,7 @@ function UserProfile() {
 
                                     <div style={{ width: '270px', paddingRight: '12px' }}>
                                         <div style={{ marginBottom: '10px', position: 'relative' }}>
-                                            <label htmlFor="lastname" className='labell'>Last Name</label>
+                                            <label htmlFor="lastname" className='labell'>Name</label>
                                             <input
                                                 type="text"
                                                 className='h-14'
@@ -172,15 +164,6 @@ function UserProfile() {
                                                 />
                                         </div>
                                     </div>
-
-                                    {/* {
-                                        editP &&
-                                        <button
-                                        onClick={personalInfoEdit}
-                                        >
-                                            SAVE
-                                        </button>
-                                    } */}
                                 </div>
 
                                 <div className='flex w-full justify-between'>
@@ -200,58 +183,52 @@ function UserProfile() {
                                     </div>
                                     <div>
                                         {
-                                            editP &&
+                                            editP ?
                                             <button
                                             onClick={personalInfoEdit}
                                             className='btn btn-primary h-12'
                                             >
                                                 SAVE
-                                            </button>
+                                            </button> : <div className='w-20'></div>
                                         }
                                     </div>  
                                 </div>
 
-                                {/* {
-                                        editP &&
-                                        <button
-                                        onClick={personalInfoEdit}
-                                        >
-                                            SAVE
-                                        </button>
-                                    } */}
-
-                                    {/*
                                 <div style={{ marginTop: '50px' }}>
-                                    <div>
+                                    <div className='w-[400px] md:w-[576px]'>
                                         <div style={{ paddingBottom: '24px' }}>
-                                            <div className='flex flex-row justify-between w-[570px]'>
+                                            <div className='flex flex-row justify-between '>
                                                 <span style={{ paddingRight: '24px', fontSize: '18px' }}><strong>Email Address</strong></span>
-                                                <span className='edit' onClick={editEmailAction}>{editEmailValue}</span>
+                                                <span className='edit' onClick={editEmailAction}><Link to={'#'}>{editEmailValue}</Link></span>
                                             </div>
                                         </div>
+                                    
                                         <div style={{ width: '270px', paddingRight: '12px' }}>
-                                        <div style={{ position: 'relative', display: 'flex' }}>
-                                            <label htmlFor="lastname" className='labell'>Email</label>
+                                        <div  className='flex justify-between'>
+                                            {/* <label htmlFor="lastname" className='labell'>Email</label> */}
                                             <input
-                                                className='inputField'
+                                                className='h-14'
                                                 style={{ width: '250px' }}
                                                 type="email" placeholder={auth.userInfo.email}
                                                 value={email}
                                                 disabled={!editEmail ? true : false}
                                                 onChange={(e) => setEmail(e.target.value)}
                                             />
-                                            {
-                                                editEmail &&
-                                                <button
-                                                    style={{
-                                                        width: '130px',
-                                                        marginLeft: '15px'
-                                                    }}
-                                                    onClick={emailEdit}
-                                                >
-                                                    SAVE
-                                                </button>
-                                            }
+                                            <div>
+                                                {
+                                                    editEmail &&
+                                                    <button
+                                                        style={{
+                                                            // width: '130px',
+                                                            marginLeft: '70px'
+                                                        }}
+                                                        onClick={emailEdit}
+                                                        className='btn btn-primary'
+                                                    >
+                                                        SAVE
+                                                    </button>
+                                                }
+                                            </div>
                                         </div>
                                         </div>
                                     </div>
@@ -260,13 +237,13 @@ function UserProfile() {
                                         <div style={{ paddingBottom: '24px' }}>
                                             <div className='flex flex-row justify-between'>
                                                 <span style={{ paddingRight: '24px', fontSize: '18px' }}><strong>Mobile Number</strong></span>
-                                                <span className='edit' onClick={editMobileAction}>{editMobileValue}</span>
+                                                <span className='edit' onClick={editMobileAction}><Link>{editMobileValue}</Link></span>
                                             </div>
                                         </div>
-                                        <div>
-                                            <label htmlFor="lastname" className=''>Mobile Number</label>
+                                        <div className='flex flex-row justify-between'>
+                                            {/* <label htmlFor="lastname" className=''>Mobile Number</label> */}
                                             <input
-                                                className='inputField'
+                                                className='h-14'
                                                 style={{ width: '250px' }}
                                                 type="number"
                                                 placeholder={auth.userInfo.contact ? auth.userInfo.contact : "ADD MOBILE NUMBER"}
@@ -274,17 +251,20 @@ function UserProfile() {
                                                 value={contact}
                                                 onChange={(e) => setContact(e.target.value)}
                                             />
-                                            {
-                                                editMobile &&
-                                                <button
-                                                    onClick={contactEdit}
-                                                >
-                                                    SAVE
-                                                </button>
-                                            }
+                                            <div>
+                                                {
+                                                    editMobile &&
+                                                    <button
+                                                        onClick={contactEdit}
+                                                        className='btn btn-primary'
+                                                    >
+                                                        SAVE
+                                                    </button>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
-                                </div>*/}
+                                </div>
                             </form>
                         </div>
                     </div>
