@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <Layout>
       <section id="home">
-        <div className='flex flex-col mt-28 md:mt-40 md:flex-row mx-10'>
+        <div className='flex flex-col md:flex-row mx-10'>
           <div className='md:mt-20 md:mr-10 md:ml-14'>
             <h1 className='animate-bounce'>
               <span className='text-[#4db5ff]'>Old</span> Arya connect!

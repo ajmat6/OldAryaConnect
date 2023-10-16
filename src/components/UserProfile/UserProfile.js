@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './profile.css'
-import Me from '../../assets/myphoto.jpg'
+import profilePicSample from '../../assets/profilePicSample.jpeg'
 import { FaAward } from 'react-icons/fa'
 import { IoSchoolOutline } from 'react-icons/io5'
 import { VscFolderLibrary } from 'react-icons/vsc'
@@ -8,11 +8,14 @@ import { Link } from 'react-router-dom'
 import Layout from '../Layout/Layout'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUserInfo } from '../../reducers/userAuthReducer'
+import { useEffect } from 'react'
+import {useNavigate} from 'react-router-dom'
 // import Links from '../Links/Links'
 
 function UserProfile() {
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState(auth.userInfo.username);
     const [name, setName] = useState(auth.userInfo.name);
@@ -29,7 +32,8 @@ function UserProfile() {
     const [editMobileValue, setEditMobileValue] = useState('Edit')
     const [editMobile, setEditMobile] = useState(false)
 
-    const [profilePic, setProfilePic] = useState(Me);
+    const [profilePic, setProfilePic] = useState(profilePicSample);
+    const [picEdit, setPicEdit] = useState(false);
 
     const [showPersonal, setShowPersonal] = useState(true);
     const [showAddress, setShowAddress] = useState(false);
@@ -113,6 +117,22 @@ function UserProfile() {
         dispatch(updateUserInfo(form))
     }
 
+    const profilePicEdit = () => {
+        setPicEdit(false);
+        const form = new FormData();
+
+        form.append('profilePicture', profilePic)
+
+        dispatch(updateUserInfo(form))
+    }
+
+    useEffect(() => {
+        if(!auth.authenticate)
+        {
+            navigate('/')
+        }
+    }, [auth.authenticate])
+
     return (
         <Layout>
             <section id='about'>
@@ -122,8 +142,25 @@ function UserProfile() {
                  <div className="container about-container">
                     <div className="">
                         <div className="">
-                            <img className='rounded-full animate-pulse border border-black mb-10 mt-4' src={Me} alt="Me" />
-                            <input className='h-17 w-60 ml-20 md:ml-23 text-sm text-center cursor-pointer' type='file' onChange={(e) => setProfilePic(e.target.files[0])}/>
+                            <img className='rounded-full animate-pulse border border-black mb-10 mt-4' src={profilePic} alt="Me" />
+                            <div>
+                                <input className='h-17 w-60 ml-20 md:ml-23 text-sm text-center cursor-pointer' type='file' 
+                                    onChange={(e) => {
+                                        setProfilePic(e.target.file); 
+                                        setPicEdit(true)
+                                        console.log(profilePic)
+                                    }}
+                                />
+                                {
+                                    picEdit ?
+                                    <button
+                                    onClick={profilePicEdit}
+                                    className='btn btn-primary h-12'
+                                    >
+                                        SAVE
+                                    </button> : <div className='w-20'></div>
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="about-content mt-8">

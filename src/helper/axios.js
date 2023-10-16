@@ -2,6 +2,7 @@ import axios from 'axios'; // importing axios
 import { api } from '../urlConfig';
 
 const token = localStorage.getItem('otoken');
+console.log(token)
 
 const axiosInstance = axios.create({// create an instance of axios for /api endpoints
     baseURL: api,

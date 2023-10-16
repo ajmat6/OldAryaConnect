@@ -12,32 +12,61 @@ import UserProfile from './components/UserProfile/UserProfile';
 import { useDispatch, useSelector } from 'react-redux';
 import { isUserLoggedIn } from './reducers/userAuthReducer';
 import AdminLogin from './components/AdminLogin/AdminLogin';
+import AdminHome from './adminComponents/AdminHome/AdminHome';
+import AdminNotes from './adminComponents/Notes/Notes';
+import Users from './adminComponents/Users/Users';
+import AdminNavbar from './adminComponents/Navbar/AdminNavbar';
+import { useInsertionEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
+
 
 const App = () => {
+  // const navigate =  useNavigate();
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(isUserLoggedIn());
   }, [])
+
+  // useEffect(() => {
+  //   if(auth.authenticate && auth.userInfo.role === 'admin')
+  //   {
+  //     // navigate('/adminHome')
+  //   }
+  // },[auth.authenticate])
   return (
     <>
-    {/* {
-      auth.userInfo
-    } */}
+    {
+      auth.authenticate && auth.userInfo.role === 'admin' ?
+      <div className="App">
+        <BrowserRouter>
+        <AdminNavbar />
+          <Routes>
+            <Route path='/adminHome' exact element={<AdminHome />} /> 
+            <Route path='/adminNotes' element={<AdminNotes/>} /> 
+            <Route path='/users' element={<Users/>} /> 
+          </Routes>
+        </BrowserRouter>
+    </div>
+    :
+    <div className='app'>
       <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />}/>
-          <Route path='/about' element={<About />}/>
-          <Route path='/notes' element={<Notes />}/>
-          <Route path='/signin' element={<Signin />}/>
-          <Route path='/signup' element={<Signup />}/>
-          <Route path='/contact' element={<Contact />}/>
-          <Route path='/myProfile' element={<UserProfile />}/>
-          <Route path='/adminLogin' element={<AdminLogin />}/>
-          <Route path='/notes/:note' element={<SemNotes />}/>
-        </Routes>
-      </BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Home />}/>
+            <Route path='/about' element={<About />}/>
+            <Route path='/notes' element={<Notes />}/>
+            <Route path='/signin' element={<Signin />}/>
+            <Route path='/signup' element={<Signup />}/>
+            <Route path='/contact' element={<Contact />}/>
+            <Route path='/myProfile' element={<UserProfile />}/>
+            <Route path='/adminLogin' element={<AdminLogin />}/>
+            <Route path='/notes/:note' element={<SemNotes />}/>
+          </Routes>
+        </BrowserRouter>
+    </div>
+    }
+      
     </>
   )
 }

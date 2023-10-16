@@ -1,10 +1,14 @@
 import React, {useState} from 'react'
 import Layout from '../Layout/Layout'
-import { Link } from 'react-router-dom'
-import { GoogleLogin } from '@react-oauth/google';
+import { Link, useNavigate } from 'react-router-dom'
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import { signinCredentials } from '../../reducers/userAuthReducer';
 import {useSelector, useDispatch} from 'react-redux'
+import { GoogleLogin } from '@react-oauth/google';
+import jwt_decode from 'jwt-decode'
+
+// client Id -> 489559664608-b3nk8m69a7gu9hbutnk5o6o4m4vgkbk4.apps.googleusercontent.com
+// client secret -> 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
 
 const Signin = () => {
     const [email, setEmail] = useState('');
@@ -12,7 +16,9 @@ const Signin = () => {
     
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    
+    const navigate = useNavigate();
+
+
     const signIn = (e) => {
         e.preventDefault();
         const payload = {
@@ -22,6 +28,23 @@ const Signin = () => {
 
         dispatch(signinCredentials(payload));
     }
+
+    const credentialResponse = (response) => {
+        console.log(response)
+        const details = jwt_decode(response.credential);
+        const payload = {
+            email: details.email,
+            password: details.email + details.name
+        }
+
+        dispatch(signinCredentials(payload))
+    }
+
+    if(auth.authenticate)
+    {
+        navigate('/myProfile')
+    }
+
   return (
     <Layout footer>
         <div className='text-white md:flex'>
@@ -68,7 +91,13 @@ const Signin = () => {
                         <p className='text-[12.5px] md:text-[16px]'>-------------------- or -------------------</p>
 
                         <div >
-                            <GoogleLogin style={{width: '376px'}} className={'w-[298px] md:w-[376px]'}/>
+                            <GoogleLogin
+                            onSuccess={credentialResponse}
+                            onError={() => {
+                                console.log('Login Failed');
+                            }}
+                            style={{width: '376px'}} className={'w-[298px] md:w-[376px]'}
+                            />
                         </div>
                     </form>
                 </div>
