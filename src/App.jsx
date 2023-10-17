@@ -5,7 +5,6 @@ import Contact from './components/Contact/Contact'
 import Home from './components/Home/Home'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Notes from './components/Notes/Notes';
-import SemNotes from './components/SemNotes/SemNotes';
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
 import UserProfile from './components/UserProfile/UserProfile';
@@ -18,6 +17,7 @@ import Users from './adminComponents/Users/Users';
 import AdminNavbar from './adminComponents/Navbar/AdminNavbar';
 import { useInsertionEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
+import NotesByTopic from './components/NotesByTopic/NotesByTopic';
 
 
 const App = () => {
@@ -61,7 +61,7 @@ const App = () => {
             <Route path='/contact' element={<Contact />}/>
             <Route path='/myProfile' element={<UserProfile />}/>
             <Route path='/adminLogin' element={<AdminLogin />}/>
-            <Route path='/notes/:note' element={<SemNotes />}/>
+            <Route path='/notes/:note' element={<NotesByTopic />}/>
           </Routes>
         </BrowserRouter>
     </div>

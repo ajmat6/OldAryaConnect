@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import './notes.css'
 import {FaGithub} from 'react-icons/fa'
@@ -6,6 +6,9 @@ import {AiFillBook} from 'react-icons/ai'
 import Me from '../../assets/myphoto.jpg'
 import NotesPhoto from '../../assets/notesPhoto.jpg'
 import Layout from '../Layout/Layout'
+import {useSelector, useDispatch} from 'react-redux'
+import { getFrontTopics } from '../../reducers/notesUserReducer'
+import { generatePublicURL } from '../../urlConfig'
 
 // for major projects
 const data1 = [
@@ -62,22 +65,29 @@ const data1 = [
 
 
 function Notes() {
+  const notes = useSelector((state) => state.uNotes);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFrontTopics());
+  }, [])
+
   return (
     <Layout>
       <section id='notes'>
         <h5>Get All Notes</h5>
-        <h2>University Exams</h2>
+        <h2>If you have any kind of notes, do share!</h2>
 
         <div className="container note-container">
           {
-            data1.map(({id, image, title, link}) => {
+            notes.notesTopics.map((item, index) => {
               return (
-                <article key={id} className="note-item">
+                <article key={index} className="note-item">
                   <div className="note-item-image">
-                    <img className='note-photo' src={image} alt={title} />
+                    <img className='note-photo' src={generatePublicURL(item.notesImage)} alt={item.title} />
                   </div>
-                  <h3>{title}</h3>
-                  <Link to={link} className="btn btn-primary">See Notes<span><AiFillBook className="notePhoto"/></span></Link>
+                  <h3>{item.title}</h3>
+                  <Link to={item.notesLink} className="btn btn-primary">See Notes<span><AiFillBook className="notePhoto"/></span></Link>
                 </article>
               )
             })
