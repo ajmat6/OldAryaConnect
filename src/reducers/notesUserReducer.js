@@ -4,12 +4,19 @@ import axiosInstance from "../helper/axios";
 const initialState = {
     loading: false,
     notesTopics: [],
+    notesByParent: [],
     message: ''
 }
 
 export const getFrontTopics = createAsyncThunk('getFrontTopics', async () => {
     const res = await axiosInstance.get('/getnotes');
     // console.log(res.data);
+    return res.data
+})
+
+export const getNotesByParent = createAsyncThunk('getNotesByParent', async (parent) => {
+    const res = await axiosInstance.get(`/getnotes/${parent}`);
+    console.log(res.data);
     return res.data
 })
 
@@ -32,6 +39,20 @@ const notesSlice = createSlice({
         })
 
         builder.addCase(getFrontTopics.rejected, (state, aciton) => {
+            state.loading = false
+            state.error = "Products fetching failed"
+        })
+
+        builder.addCase(getNotesByParent.pending, (state) => {
+            state.loading = true
+        })
+
+        builder.addCase(getNotesByParent.fulfilled, (state, action) => {
+            state.loading = false
+            state.notesByParent = action.payload
+        })
+
+        builder.addCase(getNotesByParent.rejected, (state, aciton) => {
             state.loading = false
             state.error = "Products fetching failed"
         })

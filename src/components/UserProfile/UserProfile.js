@@ -35,6 +35,8 @@ function UserProfile() {
     const [profilePic, setProfilePic] = useState(profilePicSample);
     const [picEdit, setPicEdit] = useState(false);
 
+    console.log(profilePic, "pic")
+
     const [showPersonal, setShowPersonal] = useState(true);
     const [showAddress, setShowAddress] = useState(false);
 
@@ -120,7 +122,6 @@ function UserProfile() {
     const profilePicEdit = () => {
         setPicEdit(false);
         const form = new FormData();
-
         form.append('profilePicture', profilePic)
 
         dispatch(updateUserInfo(form))
@@ -144,11 +145,13 @@ function UserProfile() {
                         <div className="">
                             <img className='rounded-full animate-pulse border border-black mb-10 mt-4' src={profilePic} alt="Me" />
                             <div>
-                                <input className='h-17 w-60 ml-20 md:ml-23 text-sm text-center cursor-pointer' type='file' 
+                                <input 
+                                    className='h-17 w-60 ml-20 md:ml-23 text-sm text-center cursor-pointer' 
+                                    type='file' 
                                     onChange={(e) => {
-                                        setProfilePic(e.target.file); 
+                                        setProfilePic(e.target.files[0]); 
                                         setPicEdit(true)
-                                        console.log(profilePic)
+                                        console.log(profilePic, "pic")
                                     }}
                                 />
                                 {
@@ -184,7 +187,7 @@ function UserProfile() {
                                                 value={username}
                                                 disabled={!editP ? true : false}
                                                 onChange={(e) => setUsername(e.target.value)}
-                                                />
+                                            />
                                         </div>
                                     </div>
 
