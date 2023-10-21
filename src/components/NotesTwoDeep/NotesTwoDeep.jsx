@@ -1,38 +1,26 @@
 import React, {useEffect} from 'react'
 import Layout from '../Layout/Layout'
-import './notebytopic.css'
+// import './note.css'
 import {AiFillBook} from 'react-icons/ai'
 import {useDispatch, useSelector} from 'react-redux'
 import { getNotesByParent } from '../../reducers/notesUserReducer'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import { generatePublicURL } from '../../urlConfig'
 import {useParams} from 'react-router-dom'
 
-const NotesByTopic = (props) => {
+const NotesTwoDeep = (props) => {
   const notes = useSelector((state) => state.uNotes);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const slug = useParams();
-  const topic = slug.note; // console it and  will give /notes/rtu ka rtu
-  console.log(topic);
-  const parentId = topic.split('=')[1]
-  console.log(parentId)
+  const topic = slug.note2; // console it and  will give /notes/rtu ka rtu
+  const parentId = topic.split('=')[1];
+  console.log(slug.note2)
 
   useEffect(() => {
     dispatch(getNotesByParent(parentId))
   }, [])
-
-  // const handleLink = (link, id) => {
-  //   const first = link.split('/')[1];
-  //   console.log(first, "first")
-
-  //   if(first !== 'notes')
-  //   {
-
-  //   }
-  //   // `/notes/pid1=${parentId}/pid2=${id}`
-  // }
+  
 
   return (
     <Layout>
@@ -49,7 +37,7 @@ const NotesByTopic = (props) => {
                     <img className='note-photo' src={generatePublicURL(item.notesImage)} alt={item.title} />
                   </div>
                   <h3>{item.title}</h3>
-                  <Link to={item.notesLink.split('/')[1] === 'notes' ? `/notes/pid1=${parentId}/pid2=${item._id}` : item.notesLink} className="btn btn-primary">See Notes<span><AiFillBook className="notePhoto"/></span></Link>
+                  <Link to={item.notesLink} target='_blank' className="btn btn-primary">See Notes<span><AiFillBook className="notePhoto"/></span></Link>
                 </article>
               )
             })
@@ -60,4 +48,4 @@ const NotesByTopic = (props) => {
   )
 }
 
-export default NotesByTopic
+export default NotesTwoDeep

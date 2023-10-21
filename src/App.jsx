@@ -18,6 +18,7 @@ import AdminNavbar from './adminComponents/Navbar/AdminNavbar';
 import { useInsertionEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
 import NotesByTopic from './components/NotesByTopic/NotesByTopic';
+import NotesTwoDeep from './components/NotesTwoDeep/NotesTwoDeep';
 
 
 const App = () => {
@@ -62,6 +63,7 @@ const App = () => {
             <Route path='/myProfile' element={<UserProfile />}/>
             <Route path='/adminLogin' element={<AdminLogin />}/>
             <Route path='/notes/:note' element={<NotesByTopic />}/>
+            <Route path='/notes/:note1/:note2' element={<NotesTwoDeep />}/>
           </Routes>
         </BrowserRouter>
     </div>

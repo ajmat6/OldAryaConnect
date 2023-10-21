@@ -26,7 +26,7 @@ function Notes() {
     {
       navigate('/signin')
     }
-    
+
     dispatch(getFrontTopics());
   }, [])
 
@@ -45,7 +45,7 @@ function Notes() {
                     <img className='note-photo' src={generatePublicURL(item.notesImage)} alt={item.title} />
                   </div>
                   <h3>{item.title}</h3>
-                  <Link to={item.notesLink} onClick={() => loadNotes(item._id)} className="btn btn-primary">See Notes<span><AiFillBook className="notePhoto"/></span></Link>
+                  <Link to={`/notes/pid1=${item._id}`} className="btn btn-primary">See Notes<span><AiFillBook className="notePhoto"/></span></Link>
                 </article>
               )
             })
