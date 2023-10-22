@@ -19,6 +19,7 @@ import { useInsertionEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
 import NotesByTopic from './components/NotesByTopic/NotesByTopic';
 import NotesTwoDeep from './components/NotesTwoDeep/NotesTwoDeep';
+import LostAndFound from './components/LostAndFound/LostAndFound';
 
 
 const App = () => {
@@ -62,6 +63,7 @@ const App = () => {
             <Route path='/contact' element={<Contact />}/>
             <Route path='/myProfile' element={<UserProfile />}/>
             <Route path='/adminLogin' element={<AdminLogin />}/>
+            <Route path='/lostandfound' element={<LostAndFound />}/>
             <Route path='/notes/:note' element={<NotesByTopic />}/>
             <Route path='/notes/:note1/:note2' element={<NotesTwoDeep />}/>
           </Routes>
