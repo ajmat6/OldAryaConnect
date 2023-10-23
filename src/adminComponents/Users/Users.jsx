@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, getallProducts, removeProduct } from "../../reducers/productReducer";
-import Modal from "../Modal/Modal";
 import './users.css'
-import { generatePublicURL } from "../../urlConfig";
 import { getAllUsers } from "../../reducers/userAuthReducer";
 import AdminLayout from "../Layout/Layout";
 

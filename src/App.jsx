@@ -20,6 +20,8 @@ import {useNavigate} from 'react-router-dom'
 import NotesByTopic from './components/NotesByTopic/NotesByTopic';
 import NotesTwoDeep from './components/NotesTwoDeep/NotesTwoDeep';
 import LostAndFound from './components/LostAndFound/LostAndFound';
+import YourItems from './components/LostAndFound/YourItems/YourItems';
+import YourResponses from './components/LostAndFound/YourResponses/YourResponses';
 
 
 const App = () => {
@@ -63,7 +65,9 @@ const App = () => {
             <Route path='/contact' element={<Contact />}/>
             <Route path='/myProfile' element={<UserProfile />}/>
             <Route path='/adminLogin' element={<AdminLogin />}/>
-            <Route path='/lostandfound' element={<LostAndFound />}/>
+            <Route path='/lost-and-found/allItems' element={<LostAndFound />}/>
+            <Route path='/lost-and-found/yourItems' element={<YourItems />}/>
+            <Route path='/lost-and-found/your-responses' element={<YourResponses />}/>
             <Route path='/notes/:note' element={<NotesByTopic />}/>
             <Route path='/notes/:note1/:note2' element={<NotesTwoDeep />}/>
           </Routes>

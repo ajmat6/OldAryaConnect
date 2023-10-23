@@ -24,7 +24,7 @@ export default function Navbar(props) {
           <Link to="/" className="text-white hover:text-white-300 px-4">Home</Link>
           <Link to="/about" className="text-white hover:text-gray-300 px-4 transition-color duration-300">About</Link>
           <Link to="/notes" className="text-white hover:text-gray-300 px-4">Notes</Link>
-          <Link to="/lostandfound" className="text-white hover:text-gray-300 px-4">Lost/Found</Link>
+          <Link to="/lost-and-found/allItems" className="text-white hover:text-gray-300 px-4">Lost/Found</Link>
           <Link to="/contact" className="text-white hover:text-gray-300 px-4">Contact</Link>
         </div>
         <div className='hidden text-white font-semibold md:block bg-gray-800 px-[13px] py-[5px] rounded-md mx-2'>

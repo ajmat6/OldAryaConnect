@@ -1,104 +1,90 @@
 import React, { useState, useEffect } from 'react'
-import Layout from '../Layout/Layout'
-import { Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import Modal from '../Modal/Modal'
+import LFLayout from './LFLayout/LFLaoyout'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate, Link } from 'react-router-dom'
+import { getAllItems } from '../../reducers/itemReducer'
+import { generatePublicURL } from '../../urlConfig'
+import {AiFillBook} from 'react-icons/ai'
+import {HiTemplate} from 'react-icons/hi'
 
 const LostAndFound = () => {
     const auth = useSelector((state) => state.auth);
+    const item = useSelector((state) => state.item)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const [itemName, setItemName] = useState('');
-    const [description, setDescription] = useState('');
-    const [question, setQuestion] = useState('');
-    const [itemImages, setItemImages] = useState([]);
-    const [itemType, setItemType] = useState('');
+    const lostItems = item.items.filter((itemm, index) => {
+        return itemm.itemType === 'lost';
+    })
+
+    const foundItems = item.items.filter((itemm, index) => {
+        return itemm.itemType === 'found';
+    })
+
+    // const lostItems = item.items.filter((itemm, index) => {
+    //     return itemm.itemType === 'lost';
+    // })
+
+    console.log(lostItems)
+    console.log(foundItems)
 
     useEffect(() => {
-        if (!auth.authenticate) {
-            navigate('/signin')
-        }
+        dispatch(getAllItems());
     }, [])
 
-    const handlePostItemSubmit = () => {
-
+  const formatDate = (date) => {
+    if(date)
+    {
+      const d = new Date(date);
+      return `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`
     }
-
-    const handleItemImages = (e) => {
-        setItemImages([...itemImages, e.target.files[0]])
-    }
-
-    const renderPostItemModel = () => {
-        return (
-            <Modal
-                modaltitle="Post Lost Item"
-                add="Post Item"
-                handleSubmit={handlePostItemSubmit}
-                modalId="post"
-            >
-                <input
-                    type="text"
-                    placeholder='Add Item Name'
-                    className='form-control bg-[#636375]'
-                    value={itemName}
-                    onChange={(e) => setItemName(e.target.value)}
-                />
-
-                <input
-                    type="text"
-                    placeholder='Add Description'
-                    className='form-control mt-3 bg-[#636375]'
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-
-                <input
-                    type="text"
-                    placeholder='Add a question you want to ask who claims item found/lost'
-                    className='form-control mt-3 bg-[#636375]'
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                />
-
-                <select
-                    className="form-control my-3 bg-[#636375]"
-                    value={itemType}
-                    onChange={(e) => setItemType(e.target.value)}
-                    placeholder='Select Item Type'
-                >
-                    <option value={'lost'}>Lost Item</option>
-                    <option value={'found'}>Found Item</option>
-                </select>
-
-                <label className='' style={{ marginLeft: '5px' }}>Add Item Image</label>
-                <input
-                    type="file"
-                    className='form-control mt-1 mb-1 bg-[#636375]'
-                    onChange={handleItemImages}
-                />
-
-                {/* {
-          productPic != '' ? <div>{productPic}</div> : null
-        } */}
-            </Modal>
-        )
-    }
+  }
 
     return (
-        <Layout>
-            <div>
-                <div>
-                    <ul className='md:flex md:flex-row md:justify-center md:items-center gap-40 md:h-20 bg-[#3e4245] text-[#1f1f38] font-medium hidden'>
-                        <li><button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#post">Post Item</button></li>
-                        <li><Link>All Items</Link></li>
-                        <li><Link>Your Items</Link></li>
-                        <li><Link>Your Responses</Link></li>
-                    </ul>
-                </div>
-            </div>
+        <LFLayout>
+            <section id='notes'>
+                <h5>All Lost and Found Items</h5>
+                <h2>Do Share with your friends!</h2>
 
-            {renderPostItemModel()}
-        </Layout>
+                <h2>LOST ITEMS</h2>
+                <div className="container note-container">
+                    {
+                        lostItems.map((itemm, index) => {
+                            return (
+                                <article key={index} className="note-item">
+                                    <div className="note-item-image">
+                                        <img className='note-photo' src={generatePublicURL(itemm.itemImages[0].img)} alt={item.title} />
+                                    </div>
+                                    <h3 className='mb-2'>{itemm.itemName}</h3>
+                                    <p><strong>Description: </strong>{itemm.description}</p>
+                                    <h2 className='mb-2'><strong>Date: </strong>{formatDate(itemm.date)}</h2>
+                                    <Link to={`/lost-and-found/items/item=${itemm._id}`} className="btn btn-primary">See Item<span><HiTemplate className="notePhoto" /></span></Link>
+                                </article>
+                            )
+                        })
+                    }
+                </div>
+
+                <h2 className='mt-5'>FOUND ITEMS</h2>
+                <div className="container note-container">
+                    {
+                        foundItems.length > 0 ? foundItems.map((itemm, index) => {
+                            return (
+                                <article key={index} className="note-item">
+                                    <div className="note-item-image">
+                                        <img className='note-photo' src={generatePublicURL(itemm.itemImages[0].img)} alt={item.title} />
+                                    </div>
+                                    <h3 className='mb-2'>{itemm.itemName}</h3>
+                                    <p><strong>Description: </strong>{itemm.description}</p>
+                                    <h2 className='mb-2'><strong>Date: </strong>{formatDate(itemm.date)}</h2>
+                                    <Link to={`/lost-and-found/items/item=${itemm._id}`} className="btn btn-primary">See Item<span><HiTemplate className="notePhoto" /></span></Link>
+                                </article>
+                            )
+                        }) : <h2 className=''>No Items!!</h2>
+                    }
+                </div>
+            </section>
+        </LFLayout>
     )
 }
 
