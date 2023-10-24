@@ -58,7 +58,7 @@ const LostAndFound = () => {
                                     <h3 className='mb-2'>{itemm.itemName}</h3>
                                     <p><strong>Description: </strong>{itemm.description}</p>
                                     <h2 className='mb-2'><strong>Date: </strong>{formatDate(itemm.date)}</h2>
-                                    <Link to={`/lost-and-found/items/item=${itemm._id}`} className="btn btn-primary">See Item<span><HiTemplate className="notePhoto" /></span></Link>
+                                    <Link to={`/lost-and-found/items/itemId=${itemm._id}`} className="btn btn-primary">See Item<span><HiTemplate className="notePhoto" /></span></Link>
                                 </article>
                             )
                         })
@@ -77,7 +77,7 @@ const LostAndFound = () => {
                                     <h3 className='mb-2'>{itemm.itemName}</h3>
                                     <p><strong>Description: </strong>{itemm.description}</p>
                                     <h2 className='mb-2'><strong>Date: </strong>{formatDate(itemm.date)}</h2>
-                                    <Link to={`/lost-and-found/items/item=${itemm._id}`} className="btn btn-primary">See Item<span><HiTemplate className="notePhoto" /></span></Link>
+                                    <Link to={`/lost-and-found/items/itemId=${itemm._id}`} className="btn btn-primary">See Item<span><HiTemplate className="notePhoto" /></span></Link>
                                 </article>
                             )
                         }) : <h2 className=''>No Items!!</h2>

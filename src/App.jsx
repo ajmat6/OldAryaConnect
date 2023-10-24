@@ -22,6 +22,7 @@ import NotesTwoDeep from './components/NotesTwoDeep/NotesTwoDeep';
 import LostAndFound from './components/LostAndFound/LostAndFound';
 import YourItems from './components/LostAndFound/YourItems/YourItems';
 import YourResponses from './components/LostAndFound/YourResponses/YourResponses';
+import UserItemDetail from './components/LostAndFound/UserItemDetail/UserItemDetail';
 
 
 const App = () => {
@@ -68,6 +69,7 @@ const App = () => {
             <Route path='/lost-and-found/allItems' element={<LostAndFound />}/>
             <Route path='/lost-and-found/yourItems' element={<YourItems />}/>
             <Route path='/lost-and-found/your-responses' element={<YourResponses />}/>
+            <Route path='/lost-and-found/items/:itemId' element={<UserItemDetail />}/>
             <Route path='/notes/:note' element={<NotesByTopic />}/>
             <Route path='/notes/:note1/:note2' element={<NotesTwoDeep />}/>
           </Routes>
