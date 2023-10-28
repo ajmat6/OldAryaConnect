@@ -35,6 +35,11 @@ export const deleteItem = createAsyncThunk('deleteItem', async (id) => {
     return true
 })
 
+export const editItem = createAsyncThunk('editItem', async (form) => {
+    const res = await axiosInstance.post('/item/update', form);
+    console.log(res)
+})
+
 const itemSlice = createSlice({
     name: 'item',
     initialState: initialState,

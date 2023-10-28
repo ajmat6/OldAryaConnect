@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteItem, getItemById } from '../../../reducers/itemReducer';
+import { deleteItem, editItem, getItemById } from '../../../reducers/itemReducer';
 import { useParams, useNavigate } from 'react-router-dom'
 import LFLayout from '../LFLayout/LFLaoyout';
 import { generatePublicURL } from '../../../urlConfig';
@@ -19,9 +19,27 @@ const UserItemDetail = () => {
     const id = params.itemId.split('=')[1];
     const navigate = useNavigate();
 
+    const [itemName, setItemName] = useState("");
+    console.log(itemName)
+    const [description, setDescription] = useState("");
+    const [question, setQuestion] = useState("");
+    const [itemImages, setItemImages] = useState([]);
+    const [itemType, setItemType] = useState("");
+
     useEffect(() => {
         dispatch(getItemById(id))
     }, [])
+
+    useEffect(() => {
+        if(item.length > 0)
+        {
+            setItemName(item[0].itemName)
+            setDescription(item[0].description)
+            setQuestion(item[0].question)
+            setItemType(item[0].itemType)
+            setItemImages(item[0].itemImages)
+        }
+    }, item)
 
     const formatDate = (date) => {
         if (date) {
@@ -43,16 +61,15 @@ const UserItemDetail = () => {
             })
     }
 
-    const [itemName, setItemName] = useState(item.length > 0 ? item[0].itemName : "");
-    console.log(itemName)
-    const [description, setDescription] = useState(item.length > 0 ? item[0].itemName : "");
-    const [question, setQuestion] = useState(item.length > 0 ? item[0].question : "");
-    const [itemImages, setItemImages] = useState(item.length > 0 ? item[0].itemImages : []);
-    const [itemType, setItemType] = useState(item.length > 0 ? item[0].itemType : "");
+    const handleItemImages = (e) => {
+        setItemImages([...itemImages, e.target.files[0]])
+    }
 
     const handleEditItemSubmit = () => {
+        setItemName(item[0].itemName)
         const form = new FormData();
 
+        form.append('id', id);
         form.append('itemName', itemName);
         form.append('description', description);
         form.append('itemType', itemType);
@@ -62,12 +79,9 @@ const UserItemDetail = () => {
             form.append('itemImages', image);
         }
 
-        // dispatch(addItem(form));
+        dispatch(editItem(form));
     }
 
-    const handleItemImages = (e) => {
-        setItemImages([...itemImages, e.target.files[0]])
-    }
 
     const renderEditItemModel = () => {
         return (
@@ -173,8 +187,8 @@ const UserItemDetail = () => {
                                 </article>
                             </div>
                         </div>
-
-                    ) :
+                    ) 
+                    :
                         (
                             <div>Loading...</div>
                         )
