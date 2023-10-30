@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteItem, editItem, getItemById } from '../../../reducers/itemReducer';
+import { deleteItem, editItem, foundItem, getItemById } from '../../../reducers/itemReducer';
 import { useParams, useNavigate } from 'react-router-dom'
 import LFLayout from '../LFLayout/LFLaoyout';
 import { generatePublicURL } from '../../../urlConfig';
@@ -26,13 +26,14 @@ const UserItemDetail = () => {
     const [itemImages, setItemImages] = useState([]);
     const [itemType, setItemType] = useState("");
 
+    const  [foundAnswer, setFoundAnswer] = useState('');
+
     useEffect(() => {
         dispatch(getItemById(id))
     }, [])
 
     useEffect(() => {
-        if(item.length > 0)
-        {
+        if (item.length > 0) {
             setItemName(item[0].itemName)
             setDescription(item[0].description)
             setQuestion(item[0].question)
@@ -140,6 +141,35 @@ const UserItemDetail = () => {
         )
     }
 
+    const handleFoundSubmit = () => {
+        const form = {
+            itemId: id,
+            response: foundAnswer
+        }
+
+        dispatch(foundItem(form));
+    }
+
+    const renderFoundModel = () => {
+        return (
+            <Modal
+                modaltitle="Answer below question!"
+                add="Submit"
+                handleSubmit={handleFoundSubmit}
+                modalId="found"
+            >
+                {item.length > 0 && <label>{item[0].question}</label>}
+                <input
+                    type="text"
+                    placeholder='Give Response..'
+                    className='form-control bg-[#636375]'
+                    value={foundAnswer}
+                    onChange={(e) => setFoundAnswer(e.target.value)}
+                />
+            </Modal>
+        )
+    }
+
     return (
         <LFLayout>
             <section id='notes'>
@@ -156,11 +186,14 @@ const UserItemDetail = () => {
                                     <p><strong className='text-[#4db5ff]'>Type: </strong>{capitalize(item[0].itemType)}</p>
                                     <h2 className='mb-2'><strong className='text-[#4db5ff]'>Date: </strong>{formatDate(item[0].date)}</h2>
                                     {
-                                        auth.userInfo._id === item[0].userId &&
-                                        <div className='flex justify-center items-center gap-3 mt-3'>
-                                            <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#edit">Edit</button>
-                                            <button className='btn bg-[#d19494] text-black' onClick={deleteItemm}>Delete</button>
-                                        </div>
+                                        auth.userInfo._id === item[0].userId ?
+                                            <div className='flex justify-center items-center gap-3 mt-3'>
+                                                <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#edit">Edit</button>
+                                                <button className='btn bg-[#d19494] text-black' onClick={deleteItemm}>Delete</button>
+                                            </div> :
+                                            <div className='flex justify-center items-center gap-3 mt-3'>
+                                                <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#found">{item[0].itemType === 'lost' ? 'Found Item?' : 'Claim Item'}</button>
+                                            </div>
                                     }
                                 </article>
                             </div>
@@ -187,14 +220,15 @@ const UserItemDetail = () => {
                                 </article>
                             </div>
                         </div>
-                    ) 
-                    :
+                    )
+                        :
                         (
                             <div>Loading...</div>
                         )
                 }
 
                 {renderEditItemModel()}
+                {renderFoundModel()}
             </section >
         </LFLayout >
     )

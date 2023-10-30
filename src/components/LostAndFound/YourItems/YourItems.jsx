@@ -41,7 +41,7 @@ const YourItems = () => {
                             return (
                                 <article key={index} className="note-item">
                                     <div className="note-item-image">
-                                        <img className='note-photo' src={generatePublicURL(itemm.itemImages[0].img)} alt={item.title} />
+                                        <img className='note-photo' src={generatePublicURL(itemm.itemImages[0].img)} alt={itemm.itemName} />
                                     </div>
                                     <h3 className='mb-2'>{itemm.itemName}</h3>
                                     <p><strong className='text-[#4db5ff]'>Description: </strong>{itemm.description}</p>
