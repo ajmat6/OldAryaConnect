@@ -37,7 +37,7 @@ export const signinCredentials = createAsyncThunk('signin', async (user) => {
 export const signUpCredentials = createAsyncThunk('signup', async (user) => {
     const res = await axiosInstance.post('/signup', {...user}) // splitting up firstName, lastName, email and password coming as argument
 
-    if(res.status === 200)
+    if(res.status === 201)
     {
         const {token, user} = res.data
         localStorage.setItem('otoken', token) // storing token in localStorage
@@ -104,7 +104,7 @@ export const adminSignUpCredentials = createAsyncThunk('adminSignupCredentials',
     const res = await axiosInstance.post('/admin/signup', {...user}) // splitting up firstName, lastName, email and password coming as argument
 
     // if sign in details were correct:
-    if(res.status === 200)
+    if(res.status === 201)
     {
         // extracting token and user from the response:
         const {token, user} = res.data

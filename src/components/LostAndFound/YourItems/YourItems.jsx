@@ -47,7 +47,12 @@ const YourItems = () => {
                                     <p><strong className='text-[#4db5ff]'>Description: </strong>{itemm.description}</p>
                                     <p><strong className='text-[#4db5ff]'>Type: </strong>{capitalize(itemm.itemType)}</p>
                                     <h2 className='mb-2'><strong className='text-[#4db5ff]'>Date: </strong>{formatDate(itemm.date)}</h2>
-                                    <Link to={`/lost-and-found/items/itemId=${itemm._id}`} className="btn btn-primary">See Item<span><HiTemplate className="notePhoto" /></span></Link>
+                                    {
+                                        // itemm.itemStatus !== 'Recovered' ?
+                                        <Link to={`/lost-and-found/items/itemId=${itemm._id}`} className="btn btn-primary">See Item<span><HiTemplate className="notePhoto" /></span></Link>
+                                        // :
+                                        // <div>Item Recovered!</div>
+                                    }
                                 </article>
                             )
                         })

@@ -17,12 +17,14 @@ const YourResponses = () => {
     let lostItemReponses = [];
     let foundItemResponses = [];
 
-    item.items.map((item, index) => 
+    item.items.map((item) => 
         item.responses.map((response) => {
-            if(item.itemType === 'lost' && response.resUserId === auth.userInfo._id) lostItemReponses.push({itemId: item._id, responseId: response._id, image: item.itemImages[0], itemName: item.itemName, response:response.response, question:item.question})
-            else if(response.resUserId === auth.userInfo._id) foundItemResponses.push({itemId: item._id, responseId: response._id, image: item.itemImages[0], itemName: item.itemName, response:response.response, question:item.question});
+            if(item.itemType === 'lost' && response.resUserId === auth.userInfo._id) lostItemReponses.push({itemId: item._id, responseId: response._id, image: item.itemImages[0], itemName: item.itemName, response:response.response, status:response.status, question:item.question})
+            else if(item.itemType === 'found' && response.resUserId === auth.userInfo._id) foundItemResponses.push({itemId: item._id, responseId: response._id, image: item.itemImages[0], itemName: item.itemName, response:response.response, status:response.status, question:item.question});
         })
     )
+
+    console.log(foundItemResponses, "found")
 
     const deleteResponse = (itemId, responseId) => {
         const form = {
@@ -31,6 +33,11 @@ const YourResponses = () => {
         }
 
         dispatch(deleteResponsee(form));
+    }
+
+    const showOwnerEmail = (itemId) => {
+        const thisItem = item.items.find(itemm => itemm._id === itemId);
+        alert(`The Owner of this item is '${thisItem.userId.email}'. You can contact the owner with this Email`)
     }
 
     return (
@@ -52,7 +59,14 @@ const YourResponses = () => {
                                     <h3 className='mb-2'>{itemm.itemName}</h3>
                                     <p><strong className='text-[#4db5ff]'>Question: </strong>{itemm.question}</p>
                                     <p><strong className='text-[#4db5ff]'>Your Answer: </strong>{itemm.response}</p>
-                                    <button className='btn btn-primary mt-3' onClick={() => deleteResponse(itemm.itemId, itemm.responseId)}>Delete</button>
+                                    <p><strong className='text-[#4db5ff]'>Status: </strong>{itemm.status}</p>
+                                    {
+                                        itemm.status === 'Pending' ?
+                                        <button className='btn btn-primary mt-3' onClick={() => deleteResponse(itemm.itemId, itemm.responseId)}>Delete</button> 
+                                        :
+                                        itemm.status === 'Accepted' &&
+                                        <button className='btn btn-primary mt-3' onClick={() => showOwnerEmail(itemm.itemId)}>Show Owner Email</button>
+                                    }
                                 </article>
                             )
                         }) :
@@ -73,6 +87,14 @@ const YourResponses = () => {
                                     <h3 className='mb-2'>{itemm.itemName}</h3>
                                     <p><strong className='text-[#4db5ff]'>Question: </strong>{itemm.question}</p>
                                     <p><strong className='text-[#4db5ff]'>Your Answer: </strong>{itemm.response}</p>
+                                    <p><strong className='text-[#4db5ff]'>Status: </strong>{itemm.status}</p>
+                                    {
+                                        itemm.status === 'Pending' ?
+                                        <button className='btn btn-primary mt-3' onClick={() => deleteResponse(itemm.itemId, itemm.responseId)}>Delete</button>
+                                        :
+                                        itemm.status === "Accepted" &&
+                                        <button className='btn btn-primary mt-3' onClick={() => showOwnerEmail(itemm.itemId)}>Show Owner Email</button>
+                                    }
                                 </article>
                             )
                         }) :

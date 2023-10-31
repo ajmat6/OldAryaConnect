@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteItem, editItem, foundItem, getItemById } from '../../../reducers/itemReducer';
+import { deleteItem, editItem, foundItem, getItemById, responseReply } from '../../../reducers/itemReducer';
 import { useParams, useNavigate } from 'react-router-dom'
 import LFLayout from '../LFLayout/LFLaoyout';
 import { generatePublicURL } from '../../../urlConfig';
@@ -26,7 +26,9 @@ const UserItemDetail = () => {
     const [itemImages, setItemImages] = useState([]);
     const [itemType, setItemType] = useState("");
 
-    const  [foundAnswer, setFoundAnswer] = useState('');
+    const [foundAnswer, setFoundAnswer] = useState('');
+
+    const [answered, setAnswered] = useState('false')
 
     useEffect(() => {
         dispatch(getItemById(id))
@@ -170,6 +172,26 @@ const UserItemDetail = () => {
         )
     }
 
+    const respondingYes = (itemId, responseId) => {
+        const form = {
+            itemId,
+            responseId,
+            reply: 'yes'
+        }
+
+        dispatch(responseReply(form))
+    }
+
+    const respondingNo = (itemId, responseId) => {
+        const form = {
+            itemId,
+            responseId,
+            reply: 'no'
+        }
+
+        dispatch(responseReply(form))
+    }
+
     return (
         <LFLayout>
             <section id='notes'>
@@ -186,7 +208,7 @@ const UserItemDetail = () => {
                                     <p><strong className='text-[#4db5ff]'>Type: </strong>{capitalize(item[0].itemType)}</p>
                                     <h2 className='mb-2'><strong className='text-[#4db5ff]'>Date: </strong>{formatDate(item[0].date)}</h2>
                                     {
-                                        auth.userInfo._id === item[0].userId ?
+                                        auth.userInfo._id === item[0].userId._id ?
                                             <div className='flex justify-center items-center gap-3 mt-3'>
                                                 <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#edit">Edit</button>
                                                 <button className='btn bg-[#d19494] text-black' onClick={deleteItemm}>Delete</button>
@@ -226,6 +248,40 @@ const UserItemDetail = () => {
                             <div>Loading...</div>
                         )
                 }
+
+                {
+                    item.length > 0 && auth.userInfo._id === item[0].userId._id &&
+                    <>
+                        <h2 className='mt-[50px]'>RESPONSES</h2>
+                        <div className="contact-options flex flex-row flex-wrap container">
+                            {
+                                item[0].responses.length > 0 ?
+                                    item[0].responses.map((response, index) =>
+                                        <article className="contact-option w-[363px]" key={index}>
+                                            <strong className='text-[#4db5ff]'>Question: </strong>
+                                            <h2> {item[0].question}</h2>
+                                            <strong className='text-[#4db5ff]'>Response: </strong>
+                                            <h6 className='box-border'>{response.response}</h6>
+                                            <a href="mailto:ajmat1130666@gmail.com" target="_blank">Give Response Appropriately!</a>
+                                            <div>
+                                                {
+                                                    response.status === 'Pending' ?
+                                                        <>
+                                                            <button className='btn btn-primary' onClick={() => respondingYes(item[0]._id, response._id)}>Approve</button>
+                                                            <button className='btn bg-[#d19494] text-black ml-2' onClick={() => respondingNo(item[0]._id, response._id)}>Discard</button>
+                                                        </>
+                                                        :
+                                                        <div>You Have Already answered!</div>
+                                                }
+                                            </div>
+                                        </article>
+                                    ) :
+                                    <div>No Responses</div>
+                            }
+                        </div>
+                    </>
+                }
+
 
                 {renderEditItemModel()}
                 {renderFoundModel()}

@@ -4,6 +4,7 @@ import axiosInstance from "../helper/axios";
 const initialState = {
     loading: false,
     deletingItem: false,
+    replying: false,
     items: [],
     userItems: [],
     itemDetails: [],
@@ -49,6 +50,11 @@ export const foundItem = createAsyncThunk('foundItem', async (form) => {
 export const deleteResponsee = createAsyncThunk('deleteResponse', async (form) => {
     const res = await axiosInstance.post('/item/response/delete', form);
     console.log(res)
+})
+
+export const responseReply = createAsyncThunk('responseReply', async (form) => {
+    const res = await axiosInstance.post('/item/response/reply', form);
+    if(res.status == 200) return true;
 })
 
 const itemSlice = createSlice({
@@ -157,6 +163,18 @@ const itemSlice = createSlice({
 
         builder.addCase(deleteResponsee.rejected, (state, aciton) => {
             state.deletingItem = false
+        })
+
+        builder.addCase(responseReply.pending, (state) => {
+            state.replying = true
+        })
+
+        builder.addCase(responseReply.fulfilled, (state, action) => {
+            state.replying = false
+        })
+
+        builder.addCase(responseReply.rejected, (state, aciton) => {
+            state.replying = false
         })
     }
 })
