@@ -143,7 +143,7 @@ function UserProfile() {
                  <div className="container about-container">
                     <div className="">
                         <div className="">
-                            <img className='rounded-full animate-pulse border border-black mb-10 mt-4' src={profilePic} alt="Me" />
+                            <img className='rounded-full border border-black mb-10 mt-4' src={profilePic} alt="Me" />
                             <div>
                                 <input 
                                     className='h-17 w-60 ml-20 md:ml-23 text-sm text-center cursor-pointer' 
