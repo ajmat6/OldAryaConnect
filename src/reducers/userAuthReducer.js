@@ -67,6 +67,7 @@ export const signoutAction = createAsyncThunk('signout', async () => {
 })
 
 export const updateUserInfo = createAsyncThunk('updateUserInfo', async (payload) => {
+    console.log(payload, "pic edit")
     const res = await axiosInstance.post('/user/update', payload)
     console.log(res)
     if(res.status === 200)

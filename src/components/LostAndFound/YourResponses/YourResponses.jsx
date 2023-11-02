@@ -7,6 +7,7 @@ import { deleteResponsee, getAllItems } from '../../../reducers/itemReducer'
 
 const YourResponses = () => {
     const item = useSelector((state) => state.item)
+    const mode = useSelector((state) => state.mode)
     const auth = useSelector((state) => state.auth)
     const dispatch = useDispatch()
 
@@ -43,7 +44,7 @@ const YourResponses = () => {
     return (
         <LFLayout>
             <section id='notes'>
-                <h5>Your Items</h5>
+                <h5 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Your Items</h5>
                 <h2>Do Share with your friends!</h2>
 
                 <h2>LOST ITEM RESPONSES</h2>
@@ -70,7 +71,7 @@ const YourResponses = () => {
                                 </article>
                             )
                         }) :
-                        <div>No Responses!!</div>
+                        <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>No Responses!!</div>
                     }
                 </div>
 
@@ -98,7 +99,7 @@ const YourResponses = () => {
                                 </article>
                             )
                         }) :
-                        <div>No Responses!!</div>
+                        <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>No Responses!!</div>
                     }
                 </div>
             </section>

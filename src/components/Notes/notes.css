@@ -2,10 +2,10 @@
     margin-top: 8rem;
 }
 
-body
+/* body
 {
     background: linear-gradient(black, #1f1f38, black);
-}
+} */
 
 .note-container {
     display: grid;

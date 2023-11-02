@@ -42,10 +42,13 @@ html{
 
 body{
   font-family: 'Poppins', sans-serif;
-  background: var(--color-bg);
+  background: linear-gradient(black, #1f1f38, black);
   color: var(--color-white);
   line-height: 1.7;
-  /* background-image: url('./Assets/bg-texture.jpg')  ; */
+}
+
+.dark-mode {
+  background: linear-gradient(black, #1f1f38, black);
 }
 
 

@@ -15,6 +15,7 @@ const Signin = () => {
     const [password, setPassword] = useState('');
     
     const auth = useSelector((state) => state.auth);
+    const mode = useSelector((state) => state.mode)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -55,7 +56,7 @@ const Signin = () => {
                 <div className='flex flex-col col-span-1 justify-center items-center md:p-8 mt-8 p-4'>
                     <div className='flext flex-col justify-start md:w-96'>
                         <div className='text-[#4db5ff]'>Hey!</div>
-                        <h1>Welcome Back</h1>
+                        <h1 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Welcome Back</h1>
                     </div>
 
                     <form action="" className='flex flex-col justify-start mt-4 md:w-[376px] w-[298px]'>
@@ -85,10 +86,10 @@ const Signin = () => {
                         
                         <div className='flex flex-row justify-between items-center text-[10px] md:w-[376px] w-[298px]'>
                             <div><Link>Forgot Password?</Link></div>
-                            <div>Don't have an account? <Link to={'/signup'}>Sign Up</Link></div>
+                            <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Don't have an account? <Link to={'/signup'}>Sign Up</Link></div>
                         </div>
 
-                        <p className='text-[12.5px] md:text-[16px]'>-------------------- or -------------------</p>
+                        <p className={`text-[12.5px] md:text-[16px] ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>-------------------- or -------------------</p>
 
                         <div >
                             <GoogleLogin

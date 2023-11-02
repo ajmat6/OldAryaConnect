@@ -8,6 +8,7 @@ import { getItemsByUser } from '../../../reducers/itemReducer'
 
 const YourItems = () => {
     const auth = useSelector((state) => state.auth);
+    const mode = useSelector((state) => state.mode)
     const item = useSelector((state) => state.item)
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const YourItems = () => {
     return (
         <LFLayout>
             <section id='notes'>
-                <h5>Your Items</h5>
+                <h5 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Your Items</h5>
                 <h2>Do Share with your friends!</h2>
 
                 {/* <h2>LOST ITEMS</h2> */}

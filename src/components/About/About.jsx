@@ -6,13 +6,15 @@ import {IoSchoolOutline} from 'react-icons/io5'
 import {VscFolderLibrary} from 'react-icons/vsc'
 import { Link } from 'react-router-dom'
 import Layout from '../Layout/Layout'
+import {useSelector} from 'react-redux'
 // import Links from '../Links/Links'
 
 function About() {
+  const mode = useSelector((state) => state.mode)
   return (
     <Layout>
       <section id='about'>
-        <h5>Get To Know</h5>
+        <h5 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Get To Know</h5>
         <h2>About Me</h2>
 
         <div className="container about-container">
@@ -24,7 +26,7 @@ function About() {
 
           <div className="about-content">
             <div className="about-cards">
-              <article className="about-card-content">
+              <article className={`about-card-content ${mode.mode === 'dark' ? 'bg-[#2c2c6c]' : ''}`}>
                 <FaAward className="about-icon"/>
                 <h5>Programmer</h5>
                 <small>Leetcode 450+ Questions Solved</small>
@@ -41,7 +43,7 @@ function About() {
               </article>
             </div>
 
-            <p>"Hey there! I'm Ajmat Kathat, a versatile programmer, full stack web developer, and video editor. With a passion for creating captivating digital experiences, I specialize in crafting elegant websites and seamlessly editing videos that leave a lasting impact. Through my expertise in programming languages and creative design, I strive to bring your visions to life. Let's collaborate and make your online presence truly shine!"</p>
+            <p className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>"Hey there! I'm Ajmat Kathat, a versatile programmer, full stack web developer, and video editor. With a passion for creating captivating digital experiences, I specialize in crafting elegant websites and seamlessly editing videos that leave a lasting impact. Through my expertise in programming languages and creative design, I strive to bring your visions to life. Let's collaborate and make your online presence truly shine!"</p>
 
             <Link to="/contact" className='btn btn-primary'>Contact Me</Link>
             <Link to="/adminLogin" className='btn btn-primary ml-3'>Login as Ajmat!</Link>

@@ -10,6 +10,8 @@ import {useParams} from 'react-router-dom'
 
 const NotesByTopic = (props) => {
   const notes = useSelector((state) => state.uNotes);
+  const mode = useSelector((state) => state.mode)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,21 +25,10 @@ const NotesByTopic = (props) => {
     dispatch(getNotesByParent(parentId))
   }, [])
 
-  // const handleLink = (link, id) => {
-  //   const first = link.split('/')[1];
-  //   console.log(first, "first")
-
-  //   if(first !== 'notes')
-  //   {
-
-  //   }
-  //   // `/notes/pid1=${parentId}/pid2=${id}`
-  // }
-
   return (
     <Layout>
       <section id='notes'>
-        <h5>Get All Notes</h5>
+        <h5 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Get All Notes</h5>
         <h2>If you have any kind of notes, do share!</h2>
 
         <div className="container note-container">

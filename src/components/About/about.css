@@ -39,7 +39,7 @@
 }
 
 .about-card-content {
-    background: var(--color-bg-variant);
+    /* background: var(--color-bg-variant); */
     border: 2px solid transparent;
     border-radius: 2rem;
     padding: 2rem;

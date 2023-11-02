@@ -2,11 +2,6 @@
     margin-top: 5rem;
 }
 
-body
-{
-    background: linear-gradient(black, #1f1f38, black);
-}
-
 .note-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

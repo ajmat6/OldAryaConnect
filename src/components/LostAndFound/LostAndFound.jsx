@@ -9,6 +9,7 @@ import { HiTemplate } from 'react-icons/hi'
 
 const LostAndFound = () => {
     const auth = useSelector((state) => state.auth);
+    const mode = useSelector((state) => state.mode);
     const item = useSelector((state) => state.item)
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const LostAndFound = () => {
     return (
         <LFLayout>
             <section id='notes'>
-                <h5>All Lost and Found Items</h5>
+                <h5 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>All Lost and Found Items</h5>
                 <h2>Do Share with your friends!</h2>
 
                 <h2>LOST ITEMS</h2>

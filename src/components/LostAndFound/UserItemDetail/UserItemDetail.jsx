@@ -14,6 +14,8 @@ import Modal from '../../Modal/Modal'
 const UserItemDetail = () => {
     const item = useSelector((state) => state.item.itemDetails);
     const auth = useSelector((state) => state.auth);
+    const mode = useSelector((state) => state.mode)
+    
     const dispatch = useDispatch();
     const params = useParams();
     const id = params.itemId.split('=')[1];
@@ -195,7 +197,7 @@ const UserItemDetail = () => {
     return (
         <LFLayout>
             <section id='notes'>
-                <h5>Item Details</h5>
+                <h5 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Item Details</h5>
                 <h2>Do Share with your friends!</h2>
 
                 {

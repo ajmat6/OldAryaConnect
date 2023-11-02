@@ -60,7 +60,7 @@ export const responseReply = createAsyncThunk('responseReply', async (form) => {
 const itemSlice = createSlice({
     name: 'item',
     initialState: initialState,
-    reducer: {
+    reducers: {
 
     },
 

@@ -10,6 +10,7 @@ import {useParams} from 'react-router-dom'
 
 const NotesTwoDeep = (props) => {
   const notes = useSelector((state) => state.uNotes);
+  const mode = useSelector((state) => state.mode)
   const dispatch = useDispatch();
 
   const slug = useParams();
@@ -25,7 +26,7 @@ const NotesTwoDeep = (props) => {
   return (
     <Layout>
       <section id='notes'>
-        <h5>Get All Notes</h5>
+        <h5 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Get All Notes</h5>
         <h2>If you have any kind of notes, do share!</h2>
 
         <div className="container note-container">

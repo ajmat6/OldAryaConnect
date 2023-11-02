@@ -1,19 +1,17 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './profile.css'
 import profilePicSample from '../../assets/profilePicSample.jpeg'
-import { FaAward } from 'react-icons/fa'
-import { IoSchoolOutline } from 'react-icons/io5'
-import { VscFolderLibrary } from 'react-icons/vsc'
 import { Link } from 'react-router-dom'
 import Layout from '../Layout/Layout'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUserInfo } from '../../reducers/userAuthReducer'
 import { useEffect } from 'react'
-import {useNavigate} from 'react-router-dom'
-// import Links from '../Links/Links'
+import { useNavigate } from 'react-router-dom'
+import { generatePublicURL } from '../../urlConfig'
 
 function UserProfile() {
     const auth = useSelector((state) => state.auth);
+    const mode = useSelector((state) => state.mode)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -78,13 +76,7 @@ function UserProfile() {
     const personalInfoEdit = () => {
         editPersonal()
         const form = {
-            payload: {
-                info: {
-                    name,
-                    username,
-                    gender
-                }
-            }
+            name, username, gender
         }
 
         dispatch(updateUserInfo(form))
@@ -94,11 +86,7 @@ function UserProfile() {
     const emailEdit = () => {
         editEmailAction()
         const form = {
-            payload: {
-                info: {
-                    email
-                }
-            }
+            email
         }
 
         dispatch(updateUserInfo(form))
@@ -107,13 +95,8 @@ function UserProfile() {
     // function to handle mobile number edit:
     const contactEdit = () => {
         editMobileAction()
-        console.log("edit ho raha")
         const form = {
-            payload: {
-                info: {
-                    contact
-                }
-            }
+            contact
         }
 
         dispatch(updateUserInfo(form))
@@ -128,61 +111,62 @@ function UserProfile() {
     }
 
     useEffect(() => {
-        if(!auth.authenticate)
-        {
+        if (!auth.authenticate) {
             navigate('/')
         }
-    }, [auth.authenticate])
+    }, [])
 
     return (
         <Layout>
             <section id='about'>
-                <h5>Your Profile</h5>
+                <h5 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Your Profile</h5>
                 <h2>Have Notes? <Link to={'/contact'}>Share</Link></h2>
 
-                 <div className="container about-container">
+                <div className={`container about-container ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>
                     <div className="">
                         <div className="">
-                            <img className='rounded-full border border-black mb-10 mt-4' src={profilePic} alt="Me" />
-                            <div>
-                                <input 
-                                    className='h-17 w-60 ml-20 md:ml-23 text-sm text-center cursor-pointer' 
-                                    type='file' 
+                            <div className='w-[300px] md:w-full'>
+                                <img className='rounded-full border border-[#4db5ff] mb-10 mt-4 h-[320px] md:h-[380px] object-contain' src={auth.userInfo.profilePic !== '' ? generatePublicURL(auth.userInfo.profilePic) : profilePic} alt="Me" />
+                            </div>
+                            <div className='flex flex-row gap-3 w-[300px] md:w-full'>
+                                <input
+                                    className={`h-17 w-60 ml-18 md:ml-[40px] text-sm text-center cursor-pointer p-2 ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}
+                                    type='file'
                                     onChange={(e) => {
-                                        setProfilePic(e.target.files[0]); 
+                                        setProfilePic(e.target.files[0]);
                                         setPicEdit(true)
                                         console.log(profilePic, "pic")
                                     }}
                                 />
                                 {
                                     picEdit ?
-                                    <button
-                                    onClick={profilePicEdit}
-                                    className='btn btn-primary h-12'
-                                    >
-                                        SAVE
-                                    </button> : <div className='w-20'></div>
+                                        <button
+                                            onClick={profilePicEdit}
+                                            className='btn btn-primary h-12'
+                                        >
+                                            SAVE
+                                        </button> : <div className='w-20'></div>
                                 }
                             </div>
                         </div>
                     </div>
                     <div className="about-content mt-8">
                         <div className='rightContainer'>
-                            <div style={{ paddingBottom: '24px' }}>
+                            <div style={{ paddingBottom: '24px' }} className='w-[300px] md:w-full '>
                                 <div className='flex flex-row justify-between'>
                                     <span style={{ paddingRight: '24px', fontSize: '18px' }}><strong>Personal Information</strong></span>
-                                    <span onClick={editPersonal}><Link to={'#'}>{editPValue}</Link></span>
+                                    <span onClick={editPersonal}><Link to={'#'} className={`hover:${mode.mode === 'light' ? 'text-black' : ''}`}>{editPValue}</Link></span>
                                 </div>
                             </div>
 
-                            <form>
-                                <div className='flex flex-start'>
-                                    <div style={{paddingRight: '12px' }}>
+                            <form className='md:w-full w-[300px]'>
+                                <div className='flex flex-start w-[300px] md:w-full'>
+                                    <div style={{ paddingRight: '12px' }}>
                                         <div style={{ marginBottom: '10px', position: 'relative' }}>
                                             <label htmlFor="firstname" className='labell'>Username</label>
                                             <input
                                                 type="text"
-                                                className='h-14'
+                                                className={`h-10 ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}
                                                 placeholder={auth.userInfo.username}
                                                 value={username}
                                                 disabled={!editP ? true : false}
@@ -196,18 +180,17 @@ function UserProfile() {
                                             <label htmlFor="lastname" className='labell'>Name</label>
                                             <input
                                                 type="text"
-                                                className='h-14'
+                                                className={`h-10 ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}
                                                 placeholder={auth.userInfo.name}
                                                 value={name}
                                                 disabled={!editP ? true : false}
                                                 onChange={(e) => setName(e.target.value)}
-                                                />
+                                            />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className='flex w-full justify-between'>
-
                                     <div style={{ padding: '12px 0', fontSize: '14px' }}>
                                         Your Gender
                                     </div>
@@ -224,67 +207,57 @@ function UserProfile() {
                                     <div>
                                         {
                                             editP ?
-                                            <button
-                                            onClick={personalInfoEdit}
-                                            className='btn btn-primary h-12'
-                                            >
-                                                SAVE
-                                            </button> : <div className='w-20'></div>
+                                                <button
+                                                    onClick={personalInfoEdit}
+                                                    className='btn btn-primary p-2'
+                                                >
+                                                    SAVE
+                                                </button> : <div className='w-20'></div>
                                         }
-                                    </div>  
+                                    </div>
                                 </div>
 
-                                <div style={{ marginTop: '50px' }}>
-                                    <div className='w-[400px] md:w-[576px]'>
-                                        <div style={{ paddingBottom: '24px' }}>
-                                            <div className='flex flex-row justify-between '>
-                                                <span style={{ paddingRight: '24px', fontSize: '18px' }}><strong>Email Address</strong></span>
-                                                <span className='edit' onClick={editEmailAction}><Link to={'#'}>{editEmailValue}</Link></span>
-                                            </div>
-                                        </div>
-                                    
-                                        <div style={{ width: '270px', paddingRight: '12px' }}>
-                                        <div  className='flex justify-between'>
-                                            {/* <label htmlFor="lastname" className='labell'>Email</label> */}
-                                            <input
-                                                className='h-14'
-                                                style={{ width: '250px' }}
-                                                type="email" placeholder={auth.userInfo.email}
-                                                value={email}
-                                                disabled={!editEmail ? true : false}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                            />
-                                            <div>
-                                                {
-                                                    editEmail &&
-                                                    <button
-                                                        style={{
-                                                            // width: '130px',
-                                                            marginLeft: '70px'
-                                                        }}
-                                                        onClick={emailEdit}
-                                                        className='btn btn-primary'
-                                                    >
-                                                        SAVE
-                                                    </button>
-                                                }
-                                            </div>
-                                        </div>
+                                <div style={{ marginTop: '50px' }} className='w-[300px] md:w-full'>
+                                    <div style={{ paddingBottom: '24px' }}>
+                                        <div className='flex flex-row justify-between '>
+                                            <span style={{ paddingRight: '24px', fontSize: '18px' }}><strong>Email Address</strong></span>
+                                            <span className='edit' onClick={editEmailAction}><Link to={'#'} className={`hover:${mode.mode === 'light' ? 'text-black' : ''}`}>{editEmailValue}</Link></span>
                                         </div>
                                     </div>
 
-                                    <div style={{ marginTop: '50px' }}>
+                                    <div className='flex flex-row justify-between'>
+                                        {/* <label htmlFor="lastname" className='labell'>Email</label> */}
+                                        <input
+                                            className={`h-10 w-[220px] md:w-[250px] ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}
+                                            type="email" placeholder={auth.userInfo.email}
+                                            value={email}
+                                            disabled={!editEmail ? true : false}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                        <div>
+                                            {
+                                                editEmail &&
+                                                <button
+                                        
+                                                    onClick={emailEdit}
+                                                    className='btn btn-primary p-2 mt-1'
+                                                >
+                                                    SAVE
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div style={{ marginTop: '50px' }} className='w-[300px] md:w-full'>
                                         <div style={{ paddingBottom: '24px' }}>
                                             <div className='flex flex-row justify-between'>
                                                 <span style={{ paddingRight: '24px', fontSize: '18px' }}><strong>Mobile Number</strong></span>
-                                                <span className='edit' onClick={editMobileAction}><Link>{editMobileValue}</Link></span>
+                                                <span className='edit' onClick={editMobileAction}><Link className={`hover:${mode.mode === 'light' ? 'text-black' : ''}`}>{editMobileValue}</Link></span>
                                             </div>
                                         </div>
                                         <div className='flex flex-row justify-between'>
-                                            {/* <label htmlFor="lastname" className=''>Mobile Number</label> */}
                                             <input
-                                                className='h-14'
-                                                style={{ width: '250px' }}
+                                                className={`h-10 w-[220px] md:w-[250px] ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}
                                                 type="number"
                                                 placeholder={auth.userInfo.contact ? auth.userInfo.contact : "ADD MOBILE NUMBER"}
                                                 disabled={!editMobile ? true : false}
@@ -296,7 +269,7 @@ function UserProfile() {
                                                     editMobile &&
                                                     <button
                                                         onClick={contactEdit}
-                                                        className='btn btn-primary'
+                                                        className='btn btn-primary p-2 mt-1'
                                                     >
                                                         SAVE
                                                     </button>
@@ -308,7 +281,7 @@ function UserProfile() {
                             </form>
                         </div>
                     </div>
-                </div> 
+                </div>
             </section>
         </Layout>
     )

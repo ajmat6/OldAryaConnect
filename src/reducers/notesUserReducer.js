@@ -24,7 +24,7 @@ export const getNotesByParent = createAsyncThunk('getNotesByParent', async (pare
 const notesSlice = createSlice({
     name: 'notes',
     initialState: initialState,
-    reducer: {
+    reducers: {
 
     },
 

@@ -14,6 +14,7 @@ import { generatePublicURL } from '../../urlConfig'
 function Notes() {
   const notes = useSelector((state) => state.uNotes);
   const auth = useSelector((state) => state.auth);
+  const mode = useSelector((state) => state.mode)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ function Notes() {
   return (
     <Layout>
       <section id='notes'>
-        <h5>Get All Notes</h5>
+        <h5 className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Get All Notes</h5>
         <h2>If you have any kind of notes, do share!</h2>
 
         <div className="container note-container">
