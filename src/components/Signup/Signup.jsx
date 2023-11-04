@@ -75,7 +75,7 @@ const Signup = () => {
                                     </label>
                                 </div>
                                 <div className='mt-1'>
-                                    <input type="email" placeholder='Enter your name' className='h-14 text-[11px]' value={name} onChange={(e) => setName(e.target.value)} />
+                                    <input type="email" placeholder='Enter your name' className={`h-14 text-[11px] ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`} value={name} onChange={(e) => setName(e.target.value)} />
                                 </div>
 
                                 <div>
@@ -85,7 +85,7 @@ const Signup = () => {
                                     </label>
                                 </div>
                                 <div className='mt-1'>
-                                    <input type="email" placeholder='Enter your username' className='h-14 text-[11px]' value={username} onChange={(e) => setUsername(e.target.value)} />
+                                    <input type="email" placeholder='Enter your username' className={`h-14 text-[11px] ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`} value={username} onChange={(e) => setUsername(e.target.value)} />
                                 </div>
 
                                 <div>
@@ -95,7 +95,7 @@ const Signup = () => {
                                     </label>
                                 </div>
                                 <div className='mt-1'>
-                                    <input type="email" placeholder='Enter your email' className='h-14 text-[11px]' value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <input type="email" placeholder='Enter your email' className={`h-14 text-[11px] ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`} value={email} onChange={(e) => setEmail(e.target.value)} />
                                 </div>
 
                                 <div className='mt-4'>
@@ -105,7 +105,7 @@ const Signup = () => {
                                     </label>
                                 </div>
                                 <div className='mt-1'>
-                                    <input type="password" placeholder='Enter your password' className='h-14 text-[11px]' value={password} onChange={(e) => setPassword(e.target.value)} />
+                                    <input type="password" placeholder='Enter your password' className={`h-14 text-[11px] ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`} value={password} onChange={(e) => setPassword(e.target.value)} />
                                 </div>
                             </div>
 

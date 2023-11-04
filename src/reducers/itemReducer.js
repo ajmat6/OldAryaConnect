@@ -3,7 +3,9 @@ import axiosInstance from "../helper/axios";
 
 const initialState = {
     loading: false,
+    adding: false,
     deletingItem: false,
+    editing: false,
     replying: false,
     items: [],
     userItems: [],
@@ -14,7 +16,7 @@ const initialState = {
 
 export const addItem = createAsyncThunk('addItem', async (form) => {
     const res = await axiosInstance.post('/addItem', form);
-    console.log(res)
+    console.log(res, "additem")
 })
 
 export const getAllItems = createAsyncThunk('getAllItems', async () => {
@@ -67,15 +69,17 @@ const itemSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(addItem.pending, (state) => {
             state.loading = true
+            state.adding = true
         })
 
         builder.addCase(addItem.fulfilled, (state, action) => {
             state.loading = false
-
+            state.adding = false
         })
 
         builder.addCase(addItem.rejected, (state, aciton) => {
             state.loading = false
+            state.adding = false
         })
 
         builder.addCase(getAllItems.pending, (state) => {
@@ -130,15 +134,15 @@ const itemSlice = createSlice({
         })
 
         builder.addCase(editItem.pending, (state) => {
-            state.loading = true
+            state.editing = true
         })
 
         builder.addCase(editItem.fulfilled, (state, action) => {
-            state.loading = false
+            state.editing = false
         })
 
         builder.addCase(editItem.rejected, (state, aciton) => {
-            state.loading = false
+            state.editing = false
         })
 
         builder.addCase(foundItem.pending, (state) => {

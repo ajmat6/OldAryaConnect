@@ -9,13 +9,16 @@ import 'swiper/css/bundle';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import Modal from '../../Modal/Modal'
-
+import monkey from '../../../assets/sorryMonkey.png'
 
 const UserItemDetail = () => {
     const item = useSelector((state) => state.item.itemDetails);
+    const loading = useSelector((state) => state.item.loading);
+    const deleting = useSelector((state) => state.item.deletingItem);
+    const editing = useSelector((state) => state.item.editing);
     const auth = useSelector((state) => state.auth);
     const mode = useSelector((state) => state.mode)
-    
+
     const dispatch = useDispatch();
     const params = useParams();
     const id = params.itemId.split('=')[1];
@@ -66,7 +69,7 @@ const UserItemDetail = () => {
             })
     }
 
-    const handleItemImages = (e) => {
+    const handleItemImages = async (e) => {
         setItemImages([...itemImages, e.target.files[0]])
     }
 
@@ -85,6 +88,7 @@ const UserItemDetail = () => {
         }
 
         dispatch(editItem(form));
+        dispatch(getItemById(id))
     }
 
 
@@ -201,10 +205,13 @@ const UserItemDetail = () => {
                 <h2>Do Share with your friends!</h2>
 
                 {
-                    item.length > 0 ? (
+                    item.length == 0 || deleting || editing?
+                    <div id='loader' className='w-full mx-auto'></div> 
+                    :
+                    (
                         <div className='md:flex note-container container'>
                             <div className="md:flex">
-                                <article className="note-item">
+                                <article className="note-item mx-auto">
                                     <h3 className='mb-2'>{item[0].itemName}</h3>
                                     <p><strong className='text-[#4db5ff]'>Description: </strong>{item[0].description}</p>
                                     <p><strong className='text-[#4db5ff]'>Type: </strong>{capitalize(item[0].itemType)}</p>
@@ -222,9 +229,9 @@ const UserItemDetail = () => {
                                 </article>
                             </div>
                             <div className=''>
-                                <article className="note-item h-[450px]">
+                                <article className="note-item">
                                     <div className="note-item-image">
-                                        <div>
+                                        <div className=''>
                                             <Carousel
                                                 renderThumbs={() => { }} // to remove the small pics of the large one at bottom
                                                 autoPlay={true} // or just autoPlay (true is the default value)
@@ -233,8 +240,8 @@ const UserItemDetail = () => {
                                             >
                                                 {
                                                     item[0].itemImages.map((image, index) =>
-                                                        <div key={index} className='max-w-[100%] max-h-[100%] object-contain'>
-                                                            <img src={generatePublicURL(image.img)} />
+                                                        <div key={index} className='h-[385px]'>
+                                                            <img className='max-h-[100%] max-w-[100%] object-contain' src={generatePublicURL(image.img)} />
                                                         </div>
                                                     )
                                                 }
@@ -245,19 +252,22 @@ const UserItemDetail = () => {
                             </div>
                         </div>
                     )
-                        :
-                        (
-                            <div>Loading...</div>
-                        )
                 }
 
                 {
                     item.length > 0 && auth.userInfo._id === item[0].userId._id &&
                     <>
                         <h2 className='mt-[50px]'>RESPONSES</h2>
-                        <div className="contact-options flex flex-row flex-wrap container">
-                            {
-                                item[0].responses.length > 0 ?
+                        {
+                            loading ?
+                            <div id='loader' className='w-full mx-auto'></div> :
+                            item[0].responses.length == 0 ?
+                            <div className={`text-center`}>
+                                <img src={monkey} alt="not available"  className='w-[200px] h-[200px] inline'/>
+                                <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>No Responses Yet!</div>
+                            </div> :
+                            <div className="contact-options flex flex-row flex-wrap container">
+                                {
                                     item[0].responses.map((response, index) =>
                                         <article className="contact-option w-[363px]" key={index}>
                                             <strong className='text-[#4db5ff]'>Question: </strong>
@@ -277,13 +287,12 @@ const UserItemDetail = () => {
                                                 }
                                             </div>
                                         </article>
-                                    ) :
-                                    <div>No Responses</div>
-                            }
-                        </div>
+                                    ) 
+                                }
+                            </div>
+                        }
                     </>
                 }
-
 
                 {renderEditItemModel()}
                 {renderFoundModel()}

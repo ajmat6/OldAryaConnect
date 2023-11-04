@@ -51,6 +51,21 @@ body{
   background: linear-gradient(black, #1f1f38, black);
 }
 
+#loader {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 5px solid #ddd;
+  border-top-color: #333;
+  animation: rotate 1s infinite;
+}
+
+@keyframes rotate {
+  100% {
+    rotate: 360deg;
+  }
+}
+
 
 /* ****************************** General Styles ********************************* */
 

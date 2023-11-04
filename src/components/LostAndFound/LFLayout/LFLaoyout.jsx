@@ -4,7 +4,7 @@ import Layout from '../../Layout/Layout'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import Modal from '../../Modal/Modal'
-import { addItem } from '../../../reducers/itemReducer'
+import { addItem, getAllItems } from '../../../reducers/itemReducer'
 
 const LFLayout = (props) => {
     const auth = useSelector((state) => state.auth);
@@ -36,6 +36,7 @@ const LFLayout = (props) => {
         }
 
         dispatch(addItem(form));
+        // dispatch(getAllItems());
     }
 
     const handleItemImages = (e) => {

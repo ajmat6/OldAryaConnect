@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {Link} from 'react-router-dom'
 import { generatePublicURL } from '../../../urlConfig'
 import { deleteResponsee, getAllItems } from '../../../reducers/itemReducer'
+import monkey from '../../../assets/sorryMonkey.png'
 
 const YourResponses = () => {
     const item = useSelector((state) => state.item)
@@ -15,12 +16,12 @@ const YourResponses = () => {
         dispatch(getAllItems());
     }, [item.deletingItem]) 
 
-    let lostItemReponses = [];
+    let lostItemResponses = [];
     let foundItemResponses = [];
 
     item.items.map((item) => 
         item.responses.map((response) => {
-            if(item.itemType === 'lost' && response.resUserId === auth.userInfo._id) lostItemReponses.push({itemId: item._id, responseId: response._id, image: item.itemImages[0], itemName: item.itemName, response:response.response, status:response.status, question:item.question})
+            if(item.itemType === 'lost' && response.resUserId === auth.userInfo._id) lostItemResponses.push({itemId: item._id, responseId: response._id, image: item.itemImages[0], itemName: item.itemName, response:response.response, status:response.status, question:item.question})
             else if(item.itemType === 'found' && response.resUserId === auth.userInfo._id) foundItemResponses.push({itemId: item._id, responseId: response._id, image: item.itemImages[0], itemName: item.itemName, response:response.response, status:response.status, question:item.question});
         })
     )
@@ -48,60 +49,78 @@ const YourResponses = () => {
                 <h2>Do Share with your friends!</h2>
 
                 <h2>LOST ITEM RESPONSES</h2>
-                <div className="container note-container">
-                    {
-                        lostItemReponses.length > 0 ?
-                        lostItemReponses.map((itemm, index) => {
-                            return (
-                                <article key={index} className="note-item">
-                                    <div className="note-item-image">
-                                        <img className='note-photo' src={generatePublicURL(itemm.image.img)} alt={itemm.itemName} />
-                                    </div>
-                                    <h3 className='mb-2'>{itemm.itemName}</h3>
-                                    <p><strong className='text-[#4db5ff]'>Question: </strong>{itemm.question}</p>
-                                    <p><strong className='text-[#4db5ff]'>Your Answer: </strong>{itemm.response}</p>
-                                    <p><strong className='text-[#4db5ff]'>Status: </strong>{itemm.status}</p>
-                                    {
-                                        itemm.status === 'Pending' ?
-                                        <button className='btn btn-primary mt-3' onClick={() => deleteResponse(itemm.itemId, itemm.responseId)}>Delete</button> 
-                                        :
-                                        itemm.status === 'Accepted' &&
-                                        <button className='btn btn-primary mt-3' onClick={() => showOwnerEmail(itemm.itemId)}>Show Owner Email</button>
-                                    }
-                                </article>
-                            )
-                        }) :
-                        <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>No Responses!!</div>
-                    }
-                </div>
+                {
+                    item.loading ?
+                    <div id='loader' className='w-full mx-auto'></div> :
+                    lostItemResponses.length == 0 ?
+                    <div className={`text-center`}>
+                        <img src={monkey} alt="not available"  className='w-[200px] h-[200px] inline'/>
+                        <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>You Didn't Responded to any Lost Item!</div>
+                    </div> :
+                    <div className="container note-container">
+                        {
+                            lostItemResponses.length > 0 ?
+                            lostItemResponses.map((itemm, index) => {
+                                return (
+                                    <article key={index} className="note-item">
+                                        <div className="note-item-image">
+                                            <img className='note-photo' src={generatePublicURL(itemm.image.img)} alt={itemm.itemName} />
+                                        </div>
+                                        <h3 className='mb-2'>{itemm.itemName}</h3>
+                                        <p><strong className='text-[#4db5ff]'>Question: </strong>{itemm.question}</p>
+                                        <p><strong className='text-[#4db5ff]'>Your Answer: </strong>{itemm.response}</p>
+                                        <p><strong className='text-[#4db5ff]'>Status: </strong>{itemm.status}</p>
+                                        {
+                                            itemm.status === 'Pending' ?
+                                            <button className='btn btn-primary mt-3' onClick={() => deleteResponse(itemm.itemId, itemm.responseId)}>Delete</button> 
+                                            :
+                                            itemm.status === 'Accepted' &&
+                                            <button className='btn btn-primary mt-3' onClick={() => showOwnerEmail(itemm.itemId)}>Show Owner Email</button>
+                                        }
+                                    </article>
+                                )
+                            }) :
+                            <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>No Responses!!</div>
+                        }
+                    </div>
+                }
 
                 <h2 className='mt-5'>FOUND ITEM RESPONSES</h2>
-                <div className="container note-container">
-                    {
-                        foundItemResponses.length > 0 ?
-                        foundItemResponses.map((itemm, index) => {
-                            return (
-                                <article key={index} className="note-item">
-                                    <div className="note-item-image">
-                                        <img className='note-photo' src={generatePublicURL(itemm.image.img)} alt={itemm.itemName} />
-                                    </div>
-                                    <h3 className='mb-2'>{itemm.itemName}</h3>
-                                    <p><strong className='text-[#4db5ff]'>Question: </strong>{itemm.question}</p>
-                                    <p><strong className='text-[#4db5ff]'>Your Answer: </strong>{itemm.response}</p>
-                                    <p><strong className='text-[#4db5ff]'>Status: </strong>{itemm.status}</p>
-                                    {
-                                        itemm.status === 'Pending' ?
-                                        <button className='btn btn-primary mt-3' onClick={() => deleteResponse(itemm.itemId, itemm.responseId)}>Delete</button>
-                                        :
-                                        itemm.status === "Accepted" &&
-                                        <button className='btn btn-primary mt-3' onClick={() => showOwnerEmail(itemm.itemId)}>Show Owner Email</button>
-                                    }
-                                </article>
-                            )
-                        }) :
-                        <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>No Responses!!</div>
-                    }
-                </div>
+                {
+                    item.loading ?
+                    <div id='loader' className='w-full mx-auto'></div> :
+                    foundItemResponses.length == 0 ?
+                    <div className={`text-center`}>
+                        <img src={monkey} alt="not available"  className='w-[200px] h-[200px] inline'/>
+                        <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>You Didn't Responded to any Found Item!</div>
+                    </div> :
+                    <div className="container note-container">
+                        {
+                            foundItemResponses.length > 0 ?
+                            foundItemResponses.map((itemm, index) => {
+                                return (
+                                    <article key={index} className="note-item">
+                                        <div className="note-item-image">
+                                            <img className='note-photo' src={generatePublicURL(itemm.image.img)} alt={itemm.itemName} />
+                                        </div>
+                                        <h3 className='mb-2'>{itemm.itemName}</h3>
+                                        <p><strong className='text-[#4db5ff]'>Question: </strong>{itemm.question}</p>
+                                        <p><strong className='text-[#4db5ff]'>Your Answer: </strong>{itemm.response}</p>
+                                        <p><strong className='text-[#4db5ff]'>Status: </strong>{itemm.status}</p>
+                                        {
+                                            itemm.status === 'Pending' ?
+                                            <button className='btn btn-primary mt-3' onClick={() => deleteResponse(itemm.itemId, itemm.responseId)}>Delete</button>
+                                            :
+                                            itemm.status === "Accepted" &&
+                                            <button className='btn btn-primary mt-3' onClick={() => showOwnerEmail(itemm.itemId)}>Show Owner Email</button>
+                                        }
+                                    </article>
+                                )
+                            }) :
+                            <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>No Responses!!</div>
+                        }
+                    </div>
+                }
             </section>
         </LFLayout>
     )

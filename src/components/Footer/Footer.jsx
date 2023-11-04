@@ -14,19 +14,19 @@ function Footer() {
       <ul className="permalinks">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/about">About Me</Link></li>
-        {/* <li><a href="#links">Social Links</a></li> */}
+        <li><Link to="/notes">Notes</Link></li>
+        <li><Link to="/lost-and-found/allItems">Lost & found</Link></li>
         <li><Link to="/contact">Contact Me</Link></li>
       </ul>
 
       <div className="footer-socials">
         <a href="https://linkedin.com/in/ajmat-kathat-0a5b45252" target='_blank'><BsLinkedin /></a>
         <a href="https://github.com/ajmat6" target='_blank'><FaGithub /></a>
-        <a href="https://leetcode.com/ajmat6" target='_blank'><SiLeetcode /></a>
         <a href="https://instagram.com/_ajmat6" target='_blank'><BsInstagram /></a>
       </div>
 
       <div className="footer-copyright">
-        <small> Old Arya Connect || &copy; All Rights Reserved</small>
+        <small> Old Arya Connect || &copy; All Rights Reserved 2023</small>
       </div>
     </footer>
   )
