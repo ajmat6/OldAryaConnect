@@ -22,6 +22,9 @@ import LostAndFound from './components/LostAndFound/LostAndFound';
 import YourItems from './components/LostAndFound/YourItems/YourItems';
 import UserItemDetail from './components/LostAndFound/UserItemDetail/UserItemDetail';
 import YourResponses from './components/LostAndFound/YourResponses/YourResponses';
+import EmailVerify from './components/VerifyEmail/EmailVerify';
+import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import ForgotPasswordUser from './components/ForgotPassword/ForgotPasswordUser.jsx/ForgotPasswordUser';
 
 
 const App = () => {
@@ -39,6 +42,7 @@ const App = () => {
   //     // navigate('/adminHome')
   //   }
   // },[auth.authenticate])
+
   return (
     <>
     {
@@ -62,6 +66,9 @@ const App = () => {
             <Route path='/notes' element={<Notes />}/>
             <Route path='/signin' element={<Signin />}/>
             <Route path='/signup' element={<Signup />}/>
+            <Route path='/verify-email' element={<EmailVerify />}/>
+            <Route path='/forgot-password' element={<ForgotPassword />}/>
+            <Route path='/forgot-password/:token/:userId' element={<ForgotPasswordUser />}/>
             <Route path='/contact' element={<Contact />}/>
             <Route path='/myProfile' element={<UserProfile />}/>
             <Route path='/adminLogin' element={<AdminLogin />}/>

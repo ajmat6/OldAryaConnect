@@ -85,7 +85,7 @@ const Signin = () => {
                         <button className='btn btn-primary md:w-[376px] sm:w-[298px]' onClick={signIn}>Log In</button>
                         
                         <div className='flex flex-row justify-between items-center text-[10px] md:w-[376px] w-[298px]'>
-                            <div><Link>Forgot Password?</Link></div>
+                            <div><Link to={'/forgot-password'}>Forgot Password?</Link></div>
                             <div className={`${mode.mode === 'dark' ? 'text-white' : 'text-black'}`}>Don't have an account? <Link to={'/signup'}>Sign Up</Link></div>
                         </div>
 

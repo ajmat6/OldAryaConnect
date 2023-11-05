@@ -10,6 +10,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import Modal from '../../Modal/Modal'
 import monkey from '../../../assets/sorryMonkey.png'
+import './ud.css'
 
 const UserItemDetail = () => {
     const item = useSelector((state) => state.item.itemDetails);
@@ -241,7 +242,7 @@ const UserItemDetail = () => {
                                                 {
                                                     item[0].itemImages.map((image, index) =>
                                                         <div key={index} className='h-[385px]'>
-                                                            <img className='max-h-[100%] max-w-[100%] object-contain' src={generatePublicURL(image.img)} />
+                                                            <img className='max-h-[350px] max-w-[100%] object-contain' src={generatePublicURL(image.img)} />
                                                         </div>
                                                     )
                                                 }

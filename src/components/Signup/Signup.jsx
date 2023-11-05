@@ -26,13 +26,17 @@ const Signup = () => {
             password
         }
 
-        dispatch(signUpCredentials(payload));
+        dispatch(signUpCredentials(payload))
+        .then((result) => {
+            console.log("navigate", result)
+            if(result.payload.status === 201) navigate('/verify-email')
+        })
     }
 
     const credentialResponse = (response) => {
         console.log(response)
         const details = jwt_decode(response.credential);
-        console.log(details, "details")
+        // console.log(details, "details")
         const email = details.email;
         const username = details.email.split('@')[0];
         const name = details.name;
@@ -46,11 +50,10 @@ const Signup = () => {
         }
 
         dispatch(signUpCredentials(payload))
-    }
-
-    if(auth.authenticate)
-    {
-        navigate('/notes')
+        .then((result) => {
+            console.log("navigate", result)
+            if(result.payload.status === 201) navigate('/verify-email')
+        })
     }
 
     return (

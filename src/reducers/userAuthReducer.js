@@ -36,15 +36,38 @@ export const signinCredentials = createAsyncThunk('signin', async (user) => {
 
 export const signUpCredentials = createAsyncThunk('signup', async (user) => {
     const res = await axiosInstance.post('/signup', {...user}) // splitting up firstName, lastName, email and password coming as argument
+    console.log(res, "signup")
+    // if(res.status === 201)
+    // {
+    //     // return true
+    //     // const {token, user} = res.data
+    //     // localStorage.setItem('otoken', token) // storing token in localStorage
+    //     // localStorage.setItem('ouser', JSON.stringify(user)); // storing user in localStorage in the form of string 
+    // }
+    return res
+})
 
-    if(res.status === 201)
+export const verifyEmail = createAsyncThunk('verifyemail', async (form) => {
+    const res = await axiosInstance.post('/user/verify-email', form);
+
+    if(res.status === 200)
     {
         const {token, user} = res.data
-        localStorage.setItem('otoken', token) // storing token in localStorage
-        localStorage.setItem('ouser', JSON.stringify(user)); // storing user in localStorage in the form of string 
+        localStorage.setItem('otoken', token)
+        localStorage.setItem('ouser', JSON.stringify(user));
     }
 
-    return res.data;
+    return res.data
+})
+
+export const forgotPassword = createAsyncThunk('forgotPassword', async (form) => {
+    const res = await axiosInstance.post('/user/forgot-password', form);
+    console.log(res)
+})
+
+export const resetPassword = createAsyncThunk('resetPassword', async (form) => {
+    const res = await axiosInstance.post('/user/reset-password', form);
+    console.log(res)
 })
 
 export const signoutAction = createAsyncThunk('signout', async () => {
@@ -214,13 +237,31 @@ const userAuthSlice = createSlice({
 
         builder.addCase(signUpCredentials.fulfilled, (state, action) => {
             state.authenticating = false
+            state.authenticate = false
+            // state.userToken = action.payload.data.token
+            state.userInfo = action.payload.data.user
+            // state.message = action.payload.message
+        })
+
+        builder.addCase(signUpCredentials.rejected, (state, action) => {
+            state.authenticating = false
+            state.authenticate = false
+        })
+
+        builder.addCase(verifyEmail.pending, (state) => {
+            state.authenticating = true
+            state.authenticate = false
+        })
+
+        builder.addCase(verifyEmail.fulfilled, (state, action) => {
+            state.authenticating = false
             state.authenticate = true
             state.userToken = action.payload.token
             state.userInfo = action.payload.user
             state.message = action.payload.message
         })
 
-        builder.addCase(signUpCredentials.rejected, (state, action) => {
+        builder.addCase(verifyEmail.rejected, (state, action) => {
             state.authenticating = false
             state.authenticate = false
         })
