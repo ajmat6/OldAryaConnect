@@ -41,17 +41,14 @@ export const deleteItem = createAsyncThunk('deleteItem', async (id) => {
 
 export const editItem = createAsyncThunk('editItem', async (form) => {
     const res = await axiosInstance.post('/item/update', form);
-    console.log(res)
 })
 
 export const foundItem = createAsyncThunk('foundItem', async (form) => {
     const res = await axiosInstance.post('/item/response/add', form);
-    console.log(res)
 })
 
 export const deleteResponsee = createAsyncThunk('deleteResponse', async (form) => {
     const res = await axiosInstance.post('/item/response/delete', form);
-    console.log(res)
 })
 
 export const responseReply = createAsyncThunk('responseReply', async (form) => {
@@ -123,26 +120,32 @@ const itemSlice = createSlice({
 
         builder.addCase(deleteItem.pending, (state) => {
             state.loading = true
+            state.deletingItem = true
         })
 
         builder.addCase(deleteItem.fulfilled, (state, action) => {
             state.loading = false
+            state.deletingItem = false
         })
 
         builder.addCase(deleteItem.rejected, (state, aciton) => {
             state.loading = false
+            state.deletingItem = false
         })
 
         builder.addCase(editItem.pending, (state) => {
             state.editing = true
+            state.loading = true
         })
 
         builder.addCase(editItem.fulfilled, (state, action) => {
             state.editing = false
+            state.loading = false
         })
 
         builder.addCase(editItem.rejected, (state, aciton) => {
             state.editing = false
+            state.loading = false
         })
 
         builder.addCase(foundItem.pending, (state) => {

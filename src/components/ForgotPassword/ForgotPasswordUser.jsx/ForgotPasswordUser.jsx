@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Layout from '../../Layout/Layout'
 import { Link, useNavigate, useParams} from 'react-router-dom'
-import { signinCredentials, verifyEmail } from '../../../reducers/userAuthReducer';
+import { forgotPassword, resetPassword, signinCredentials, verifyEmail } from '../../../reducers/userAuthReducer';
 import {useSelector, useDispatch} from 'react-redux'
 
 
@@ -15,10 +15,25 @@ const ForgotPasswordUser = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const params = useParams();
-    console.log(params.token, params.userId, params.token.split('=')[1], params.userId.split('=')[1])
+    // console.log(params.token, params.userId, params.token.split('=')[1], params.userId.split('=')[1])
+    const token = params.token.split('=')[1];
+    const userId = params.userId.split('=')[1]
 
-    const forgotPassword = (e) => {
-        
+    const forgotPasswordd = (e) => {
+        e.preventDefault();
+        if(password !== confirmPassword)
+        {
+            // show some message:
+        }
+
+        else
+        {
+            const form = {
+                token, userId, password
+            }
+
+            dispatch(resetPassword(form));
+        }
     }
 
     if(auth.authenticate)
@@ -63,7 +78,7 @@ const ForgotPasswordUser = () => {
                                 <input type="password" placeholder='Confirm Passoword' className={`h-14 text-[11px] ${mode.mode === 'dark' ? 'text-white' : 'text-black'}`} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
                             </div>
                         </div>
-                        <button className='btn btn-primary md:w-[376px] sm:w-[298px]' onClick={forgotPassword}>Set Password</button>
+                        <button className='btn btn-primary md:w-[376px] sm:w-[298px]' onClick={forgotPasswordd}>Set Password</button>
                     </form>
                 </div>
             </div>

@@ -155,7 +155,7 @@ function UserProfile() {
                             <div style={{ paddingBottom: '24px' }} className='w-[300px] md:w-full '>
                                 <div className='flex flex-row justify-between'>
                                     <span style={{ paddingRight: '24px', fontSize: '18px' }}><strong>Personal Information</strong></span>
-                                    <span onClick={editPersonal}><Link to={'#'} className={`hover:${mode.mode === 'light' ? 'text-black' : ''}`}>{editPValue}</Link></span>
+                                    <span onClick={editPersonal}><Link to={'#'} className={`hover:${mode.mode === 'light' ? 'text-black' : ''}`} >{editPValue}</Link></span>
                                 </div>
                             </div>
 

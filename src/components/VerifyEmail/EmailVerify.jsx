@@ -15,7 +15,6 @@ const EmailVerify = () => {
 
     const verifyotp = (e) => {
         e.preventDefault();
-        console.log("hit")
         const form = {
             otp,
             userId: auth.userInfo._id

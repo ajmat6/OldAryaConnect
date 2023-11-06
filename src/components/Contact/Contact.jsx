@@ -46,8 +46,8 @@ function Contact() {
             <article  className={`contact-option ${mode.mode === 'light' ? 'hover:text-black' : ''}`}>
               <HiOutlineMail className='option-icon'/>
               <h4>Email</h4>
-              <h6>ajmat1130666@gmail.com</h6>
-              <a href="mailto:ajmat1130666@gmail.com" target="_blank">Send a message</a>
+              <h6>oldaryaconnect@gmail.com</h6>
+              <a href="mailto:oldaryaconnect@gmail.com" target="_blank">Send a message</a>
             </article>
             <article  className={`contact-option ${mode.mode === 'light' ? 'hover:text-black' : ''}`}>
               <BsLinkedin className='option-icon'/>
@@ -58,7 +58,7 @@ function Contact() {
             <article className={`contact-option ${mode.mode === 'light' ? 'hover:text-black' : ''}`}>
               <BsWhatsapp className='option-icon'/>
               <h4>WhatsApp</h4>
-              <h6>+91-95212xxxxx</h6>
+              <h6>+91-9521xxxxxx</h6>
               <a href="https://api.whatsapp.com/send?phone=9521200877" target="_blank">Send a message</a>
             </article>
           </div>
